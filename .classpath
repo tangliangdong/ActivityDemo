@@ -13,5 +13,15 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/AspectJ"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/mybatis"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Spring4.3.3"/>
+	<classpathentry kind="lib" path="C:/Users/18072/Documents/java ee jar包/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/18072/Documents/java ee jar包/json-lib-2.4-jdk15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/18072/Documents/java ee jar包/jstl.jar"/>
+	<classpathentry kind="lib" path="C:/Users/18072/Documents/java ee jar包/mybatis-3.4.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/18072/Documents/java ee jar包/mysql-connector-java-5.1.38-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/18072/Documents/java ee jar包/standard.jar"/>
+	<classpathentry kind="lib" path="C:/Users/18072/Documents/java ee jar包/mybatis-spring-1.3.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
