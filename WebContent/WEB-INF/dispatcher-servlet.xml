@@ -11,11 +11,12 @@
 	
 	<!-- 注解驱动 -->
 	<mvc:annotation-driven />
-	<mvc:resources location="/statics/" mapping="/statics/**"/>
+	<mvc:resources location="/resources/" mapping="/resources/**"/>
+	<mvc:resources location="/resources/bootstrap" mapping="/resources/bootstrap/**"/>
 	
 	<!-- 在指定包下 扫描组件bean -->
 	<context:component-scan base-package="edu.hziee.controllers" />
-	<context:component-scan base-package="edu.hziee.dao" />
+	<context:component-scan base-package="edu.hziee.services" />
 	
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>

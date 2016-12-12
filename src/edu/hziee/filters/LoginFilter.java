@@ -33,9 +33,9 @@ public class LoginFilter implements Filter {
 		String registerUrl = request.getContextPath() + "/login/register";
 		boolean loginRequest = request.getRequestURI().equals(loginUrl);
 		boolean resourceRequest = request.getRequestURI().
-				startsWith(request.getContextPath() + "/resource" + "/");
+				startsWith(request.getContextPath() + "/resources" + "/");
 		boolean loggedIn = (session != null ) 
-				&& (session.getAttribute("userName") != null);
+				&& (session.getAttribute("username") != null);
 		boolean registerRequest = request.getRequestURI().equals(registerUrl);
 		if(loggedIn || loginRequest || resourceRequest || registerRequest){
 			response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
