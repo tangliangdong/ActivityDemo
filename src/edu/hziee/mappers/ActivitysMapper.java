@@ -21,6 +21,8 @@ public interface ActivitysMapper {
     Activitys selectByPrimaryKey(Integer id);
     
     List<Activitys> select();
+    
+    List<Activitys> selectByUserId(@Param("userId") int userId);
 
     int updateByExampleSelective(@Param("record") Activitys record, @Param("example") ActivitysExample example);
 

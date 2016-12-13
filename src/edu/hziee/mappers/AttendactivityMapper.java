@@ -15,6 +15,8 @@ public interface AttendactivityMapper {
     int insertSelective(Attendactivity record);
 
     List<Attendactivity> selectByExample(AttendactivityExample example);
+    
+    List<Attendactivity> selectByUserId(int userId);
 
     int updateByExampleSelective(@Param("record") Attendactivity record, @Param("example") AttendactivityExample example);
 

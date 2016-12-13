@@ -20,4 +20,5 @@ public class AttendService {
 	public Attendactivity selectByUserIdAndActivityId(int userId,int activityId){
 		return attendMapper.selectByUserIdAndActivityId(userId,activityId);
 	}
+	
 }

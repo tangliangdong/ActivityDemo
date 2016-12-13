@@ -24,5 +24,9 @@
 	<classpathentry kind="lib" path="C:/Users/18072/Documents/java ee jar包/standard.jar"/>
 	<classpathentry kind="lib" path="C:/Users/18072/Documents/java ee jar包/mybatis-spring-1.3.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/18072/Documents/java ee jar包/zframe-ssi-core.jar"/>
+	<classpathentry kind="lib" path="C:/Users/18072/Documents/java ee jar包/commons-beanutils-1.9.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/18072/Documents/java ee jar包/commons-collections-3.2.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/18072/Documents/java ee jar包/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/18072/Documents/java ee jar包/ezmorph-1.0.6 .jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

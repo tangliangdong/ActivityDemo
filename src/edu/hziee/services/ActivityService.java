@@ -28,8 +28,11 @@ public class ActivityService {
 	private AttendactivityMapper attendMapper;
 
     public List<Activitys> selectActivitys(){
-//    	Activitys activity = activitysMapper.select();
     	return activitysMapper.select();
+    }
+    
+    public List<Activitys> selectActivitysByUserId(int userId){
+    	return activitysMapper.selectByUserId(userId);
     }
     
     public List<Activitys> DateFormat(List<Activitys> list){
