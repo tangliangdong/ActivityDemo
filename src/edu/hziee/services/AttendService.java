@@ -17,4 +17,7 @@ public class AttendService {
 	public int attend(Attendactivity a){
 		return attendMapper.insert(a);
 	}
+	public Attendactivity selectByUserIdAndActivityId(int userId,int activityId){
+		return attendMapper.selectByUserIdAndActivityId(userId,activityId);
+	}
 }

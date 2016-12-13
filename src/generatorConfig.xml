@@ -7,7 +7,7 @@
     <javaModelGenerator targetPackage="edu.hziee.models" targetProject="ActivityDemo/src" />
     <sqlMapGenerator targetPackage="edu.hziee.mappers" targetProject="ActivityDemo/src" />
     <javaClientGenerator targetPackage="edu.hziee.mappers" targetProject="ActivityDemo/src" type="XMLMAPPER" />
-    <table schema="activity" tableName="attendActivity">
+    <table schema="activity" tableName="collectActivity">
       <!-- <generatedKey column="id" sqlStatement="mysql" identity="true" /> -->
     </table>
   </context>

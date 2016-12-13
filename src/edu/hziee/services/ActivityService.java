@@ -1,7 +1,9 @@
 package edu.hziee.services;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.zlzkj.core.util.Fn;
 
 import edu.hziee.mappers.ActivitysMapper;
+import edu.hziee.mappers.AttendactivityMapper;
 import edu.hziee.models.Activitys;
+import edu.hziee.models.Attendactivity;
 
 @Repository
 @Transactional
@@ -19,9 +23,21 @@ public class ActivityService {
 	
 	@Autowired
 	private ActivitysMapper activitysMapper;
+	
+	@Autowired
+	private AttendactivityMapper attendMapper;
 
     public List<Activitys> selectActivitys(){
+//    	Activitys activity = activitysMapper.select();
     	return activitysMapper.select();
+    }
+    
+    public List<Activitys> DateFormat(List<Activitys> list){
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分");
+    	for (Activitys activity : list) {
+			//activity.setStartTime(sdf.format(activity.getStartTime()));
+		}
+    	return list;
     }
     
 	public int insertActivity(int userId,String name, String place, int count, 
@@ -39,7 +55,6 @@ public class ActivityService {
 	public Activitys selectByPrimaryKey(Integer id){
 		return activitysMapper.selectByPrimaryKey(id);
 	}
-	
 	
 	public int DateToLong(String date) throws ParseException{
 		char[] s = date.toCharArray();

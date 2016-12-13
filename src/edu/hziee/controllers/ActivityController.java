@@ -1,5 +1,7 @@
 package edu.hziee.controllers;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.List;
 
@@ -19,6 +21,8 @@ import edu.hziee.models.Attendactivity;
 import edu.hziee.models.User;
 import edu.hziee.services.ActivityService;
 import edu.hziee.services.AttendService;
+import net.sf.json.JSONObject;
+import net.sf.json.JSONString;
 import sun.awt.ModalExclude;
 
 @Controller
@@ -31,14 +35,15 @@ public class ActivityController {
 	@Autowired
 	private AttendService attendService;
 	
+//	进入活动页
 	@RequestMapping()
 	public String list(Model model){
 		List<Activitys> list = activityService.selectActivitys();
-		System.out.println(list);
 		model.addAttribute("activitys", list);
 		return "activity/activitys";
 	}
 	
+//	发起活动
 	@RequestMapping("/start")
 	public String start(Model model,HttpServletRequest req,HttpServletResponse res) throws ParseException{
 		if(req.getMethod().equals("POST")){
@@ -62,28 +67,52 @@ public class ActivityController {
 		return "activity/start";
 	}
 	
+//	活动详情页
 	@RequestMapping("/{id}")
 	public String detail(@PathVariable int id,Model model,HttpServletRequest req,HttpServletResponse res) {
+		HttpSession session = req.getSession();
+		int userId = (int) session.getAttribute("userId");
 		Activitys activity = activityService.selectByPrimaryKey(id);
+		if(attendService.selectByUserIdAndActivityId(userId, id) != null){
+			model.addAttribute("isAttended", true);
+		}else{
+			model.addAttribute("isAttended", false);
+		}
 		model.addAttribute("activity", activity);
 		return "activity/detail";
 	}
 	
+//	参与活动
 	@RequestMapping("/attend")
 	public String attend(Model model,HttpServletRequest req,HttpServletResponse res) {
 		HttpSession session = req.getSession();
+		res.setContentType("application/json");
 		int activityId = Integer.parseInt(req.getParameter("id"));
 		int userId = (int) session.getAttribute("userId");
 		Attendactivity a = new Attendactivity();
+		
 		a.setActivityId(activityId);
 		a.setUserId(userId);
 		if(attendService.attend(a) == 1){
-			return Fn.ajaxReturn(res, null,"已参加",1);
+			try {
+				PrintWriter out = res.getWriter();
+				out.write("{\"id\":\"1\",\"remind\":\"您已参与\"}");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return null;
 		}else{
-			return Fn.ajaxReturn(res, null,"参加失败",1);
+			try {
+				PrintWriter out = res.getWriter();
+				out.write("{\"id\"=\"2\",\"remind\"=\"参与失败\"}");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return null;
 		}
 	}
 	
+//	收藏活动
 	@RequestMapping("/collect")
 	public String collect(Model model,HttpServletRequest req,HttpServletResponse res){
 		

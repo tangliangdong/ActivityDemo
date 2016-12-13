@@ -20,6 +20,7 @@ public class LoginController {
 	@Autowired
 	private UserService userService;
 	
+//	跳转到登录页面
 	@RequestMapping()
 	public String get(HttpServletRequest req,HttpServletResponse res){
 		
@@ -41,6 +42,7 @@ public class LoginController {
 		return "/login/login";
 	}
 	
+//	注册账号
 	@RequestMapping("/register")
 	public String register(HttpServletRequest req,HttpServletResponse res){
 		if(req.getMethod().equals("POST")){
