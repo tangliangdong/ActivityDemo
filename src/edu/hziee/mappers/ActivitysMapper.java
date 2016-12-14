@@ -2,6 +2,8 @@ package edu.hziee.mappers;
 
 import edu.hziee.models.Activitys;
 import edu.hziee.models.ActivitysExample;
+import edu.hziee.models.User;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,6 +25,8 @@ public interface ActivitysMapper {
     List<Activitys> select();
     
     List<Activitys> selectByUserId(@Param("userId") int userId);
+    
+    Activitys selectAttendActivityByUserId(@Param("activityId") int activityId);
 
     int updateByExampleSelective(@Param("record") Activitys record, @Param("example") ActivitysExample example);
 

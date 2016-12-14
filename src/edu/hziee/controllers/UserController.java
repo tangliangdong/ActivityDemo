@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import edu.hziee.models.Activitys;
+import edu.hziee.models.Attendactivity;
+import edu.hziee.models.User;
 import edu.hziee.services.ActivityService;
 import edu.hziee.services.AttendService;
 import edu.hziee.services.UserService;
@@ -26,6 +28,9 @@ public class UserController {
 	
 	@Autowired
 	private AttendService attendService;
+	
+	@Autowired
+	private UserService userService;
 
 	@RequestMapping()
 	public String get(Model model,HttpServletRequest req,HttpServletResponse res){
@@ -42,8 +47,11 @@ public class UserController {
 	public String attended(Model model,HttpServletRequest req,HttpServletResponse res){
 		HttpSession session = req.getSession();
 		int userId = (int) session.getAttribute("userId");
-		List<Activitys> list = attend
-		model.addAttribute("activitys", list);
+		User a = userService.selectAttendActivityByUserId(userId);
+		System.out.println(a);
+		System.out.println(a.getaList());
+		
+		model.addAttribute("activitys", a.getaList());
 		return "userinfo/attend";
 	}
 	

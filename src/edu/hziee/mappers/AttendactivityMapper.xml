@@ -9,7 +9,26 @@
     -->
     <result column="activity_id" jdbcType="INTEGER" property="activityId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
-  </resultMap>
+ 	</resultMap>
+  
+  
+   <resultMap id="userAndActivityResultMap" type="edu.hziee.models.Attendactivity">
+      <!-- 活动信息 -->
+      <result column="activity_id" jdbcType="INTEGER" property="activityId" />
+    	<result column="user_id" jdbcType="INTEGER" property="userId" />
+       		<!-- 参与活动的信息
+            	一个活动有多个人参与，使用collection映射 -->
+      <collection property="aList" ofType="edu.hziee.models.Activitys">
+        <id column="id" jdbcType="INTEGER" property="id" />
+		    <result column="name" jdbcType="VARCHAR" property="name" />
+		    <result column="user_id" jdbcType="INTEGER" property="userId" />
+		    <result column="start_time" jdbcType="INTEGER" property="startTime" />
+		    <result column="end_time" jdbcType="INTEGER" property="endTime" />
+		    <result column="place" jdbcType="VARCHAR" property="place" />
+		    <result column="people_count" jdbcType="INTEGER" property="peopleCount" />
+      </collection>
+   </resultMap>
+  
   <sql id="Example_Where_Clause">
     <!--
       WARNING - @mbg.generated
@@ -105,6 +124,13 @@
       order by ${orderByClause}
     </if>
   </select>
+  <!-- 根据用户id来查找他参与的活动 -->
+  <select id="selectByUserId" resultMap="userAndActivityResultMap">
+  	SELECT activitys.* ,attendactivity.activity_id,attendactivity.user_id
+  	from activitys ,attendactivity
+  	WHERE attendactivity.activity_id = activitys.id and 
+  	attendactivity.user_id = #{userId}
+  </select>
   <select id="selectByUserIdAndActivityId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
   	select user_id,activity_id from attendactivity where user_id=#{userId} and activity_id=#{activityId}
   </select>
@@ -163,12 +189,6 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-   <select id="selectByUserId" parameterType="java.lang.Integer">
-	  	SELECT * from 
-	  	activitys LEFT JOIN attendactivity on 
-	  	id = attendactivity.activity_id 
-	  	WHERE attendactivity.user_id = #{userId}
-	  </select>
   <update id="updateByExampleSelective" parameterType="map">
     <!--
       WARNING - @mbg.generated

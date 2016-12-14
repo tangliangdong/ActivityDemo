@@ -1,5 +1,7 @@
 package edu.hziee.services;
 
+import java.util.List;
+
 import javax.imageio.spi.RegisterableService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class UserService {
 	
 	public User selectByUsername(String username){
 		return userMapper.selectByUsername(username);
+	}
+	public User selectAttendActivityByUserId(int userId){
+		return userMapper.selectAttendActivtitysByUserId(userId);
 	}
 	public int insert(User user){
 		return userMapper.insert(user);

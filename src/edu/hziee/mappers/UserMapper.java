@@ -15,8 +15,11 @@ public interface UserMapper {
     User selectByPrimaryKey(Integer id);
     
     User selectByUsername(String username);
+    
+    User selectAttendActivtitysByUserId(@Param("userId") int userId);
 
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+    
 }

@@ -16,6 +16,7 @@ import edu.hziee.mappers.ActivitysMapper;
 import edu.hziee.mappers.AttendactivityMapper;
 import edu.hziee.models.Activitys;
 import edu.hziee.models.Attendactivity;
+import edu.hziee.models.User;
 
 @Repository
 @Transactional
@@ -31,9 +32,12 @@ public class ActivityService {
     	return activitysMapper.select();
     }
     
-    public List<Activitys> selectActivitysByUserId(int userId){
-    	return activitysMapper.selectByUserId(userId);
-    }
+//    public List<Activitys> selectActivitysByUserId(int userId){
+//    	return activitysMapper.selectByUserId(userId);
+//    }
+    public Activitys selectAttendActivityByUserId(int activityId){
+		return activitysMapper.selectAttendActivityByUserId(activityId);
+	}
     
     public List<Activitys> DateFormat(List<Activitys> list){
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分");

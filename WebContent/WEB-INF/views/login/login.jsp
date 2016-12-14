@@ -4,8 +4,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="<%=path%>/resources/bootstrap/css/bootstrap.css">
-<script type="text/javascript" href="<%=path%>/resources/bootstrap/js/bootstrap.js"></script>
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/bootstrap/css/bootstrap.css' />">
+<script type="text/javascript" href="<c:url value='/resources/bootstrap/js/bootstrap.js'/>"></script>
 <title>登录页面</title>
 </head>
 <body>
