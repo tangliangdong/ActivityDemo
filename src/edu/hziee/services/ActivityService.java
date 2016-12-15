@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,9 +36,17 @@ public class ActivityService {
 //    public List<Activitys> selectActivitysByUserId(int userId){
 //    	return activitysMapper.selectByUserId(userId);
 //    }
-    public Activitys selectAttendActivityByUserId(int activityId){
-		return activitysMapper.selectAttendActivityByUserId(activityId);
+    public List<Activitys> selectAttendActivityByUserId(int userId){
+		return activitysMapper.selectAttendActivityByUserId(userId);
 	}
+    
+    public List<Activitys> selectCollectActivityByUserId(@Param("userId") int userId){
+    	return activitysMapper.selectCollectActivityByUserId(userId);
+    }
+    
+    public List<Activitys> selectPublicActivityByUserId(@Param("userId") int userId){
+    	return activitysMapper.selectPublicActivityByUserId(userId);
+    }
     
     public List<Activitys> DateFormat(List<Activitys> list){
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分");

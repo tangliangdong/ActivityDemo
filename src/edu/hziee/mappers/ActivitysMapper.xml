@@ -15,13 +15,6 @@
     <result column="place" jdbcType="VARCHAR" property="place" />
     <result column="people_count" jdbcType="INTEGER" property="peopleCount" />
     
-    <collection property="uList" ofType="edu.hziee.models.User">
-    	<id column="id" jdbcType="INTEGER" property="id" />
-	    <result column="username" jdbcType="VARCHAR" property="username" />
-	    <result column="password" jdbcType="VARCHAR" property="password" />
-	    <result column="showname" jdbcType="VARCHAR" property="showname" />
-	    <result column="power" jdbcType="INTEGER" property="power" />
-    </collection>
   </resultMap>
   
   <resultMap id="AttendResultMap" type="edu.hziee.models.Activitys">
@@ -160,12 +153,32 @@
   	where user_id=#{userId}
   </select>
   
-  <select id="selectAttendActivityByUserId" resultMap="AttendResultMap">
-  	SELECT user.showname,user.username,activitys.id as activity_id,activitys.name,activitys.start_time,activitys.end_time,activitys.place,activitys.people_count
+  <!-- <select id="selectAttendActivityByUserId" resultMap="AttendResultMap">
+  	SELECT user.showname,activitys.id as activity_id,activitys.name,activitys.start_time,activitys.end_time,activitys.place,activitys.people_count
   	from activitys left join attendactivity on activitys.id = attendactivity.activity_id 
-  	left join user on attendactivity.user_id = user.id  
-  	WHERE attendactivity.activity_id = #{activityId}
+  	left join user on activitys.user_id = user.id  
+  	WHERE attendactivity.user = #{activityId}
+  </select> -->
+  <select id="selectAttendActivityByUserId" resultMap="AttendResultMap">
+  	SELECT user.showname,activitys.id as activity_id,activitys.name,activitys.start_time,activitys.end_time,activitys.place,activitys.people_count
+  	from activitys left join user on activitys.user_id = user.id 
+  	left join attendactivity on attendactivity.activity_id = activitys.id
+  	WHERE attendactivity.user_id = #{userId}
   </select>
+  
+   <select id="selectCollectActivityByUserId" resultMap="AttendResultMap">
+  	SELECT user.showname,activitys.id as activity_id,activitys.name,activitys.start_time,activitys.end_time,activitys.place,activitys.people_count
+  	from activitys left join user on activitys.user_id = user.id 
+  	left join collectactivity on collectactivity.activity_id = activitys.id
+  	WHERE collectactivity.user_id = #{userId}
+  </select>
+  
+  <select id="selectPublicActivityByUserId" resultMap="AttendResultMap">
+  	SELECT user.showname,activitys.id as activity_id,activitys.name,activitys.start_time,activitys.end_time,activitys.place,activitys.people_count
+  	from activitys left join user on activitys.user_id = user.id 
+  	WHERE user.id = #{userId}
+  </select>
+  
   
   <select id="select" resultMap="BaseResultMap">
   	select 

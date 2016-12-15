@@ -26,8 +26,12 @@ public interface ActivitysMapper {
     
     List<Activitys> selectByUserId(@Param("userId") int userId);
     
-    Activitys selectAttendActivityByUserId(@Param("activityId") int activityId);
+    List<Activitys> selectAttendActivityByUserId(@Param("userId") int userId);
 
+    List<Activitys> selectCollectActivityByUserId(@Param("userId") int userId);
+    
+    List<Activitys> selectPublicActivityByUserId(@Param("userId") int userId);
+    
     int updateByExampleSelective(@Param("record") Activitys record, @Param("example") ActivitysExample example);
 
     int updateByExample(@Param("record") Activitys record, @Param("example") ActivitysExample example);

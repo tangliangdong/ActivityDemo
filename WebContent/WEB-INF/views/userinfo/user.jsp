@@ -12,6 +12,7 @@
 <body>
 	<div class="container">
 		<h3>你好，${showname}</h3>
+		<a class="btn btn-primary" href="<c:url value='/activity' />">返回首页</a>
 		<ul class="nav nav-tabs nav-stacked">
 		  <li><a href="<c:url value='/userinfo/collected'/>">已收藏的活动</a></li>
 		  <li><a href="<c:url value='/userinfo/attended'/>">已参与的活动</a></li>

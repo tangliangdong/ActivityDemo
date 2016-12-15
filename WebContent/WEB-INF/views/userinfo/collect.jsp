@@ -12,11 +12,12 @@
 <body>
 	<div class="container">
 		<h2>已收藏活动</h2>
+		<a class="btn btn-primary" href="<c:url value='/activity' />">返回首页</a>
 		<div class="content container" style="margin: 20px 0 0 40px;">
 			<c:forEach items="${activitys}" var="activity">
 				<div class="activity-box">
 					<h3>${activity.name}</h3>
-					<p>发起人：${activity.userId}</p>
+					<p>发起人：${activity.getuList().get(0).getShowname()}</p>
 					<p><span>发起时间：${activity.startTime}</span><span>结束时间：${activity.endTime}</span></p>
 					<p>活动地点:${activity.place}</p>
 					<p>可参与人数：${activity.peopleCount}</p>

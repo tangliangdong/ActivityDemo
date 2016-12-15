@@ -39,7 +39,12 @@ public class UserController {
 	
 	@RequestMapping("/collected")
 	public String collected(Model model,HttpServletRequest req,HttpServletResponse res){
+		HttpSession session = req.getSession();
+		int userId = (int) session.getAttribute("userId");
+		List<Activitys> a = activityService.selectCollectActivityByUserId(userId);
+		System.out.println(a.get(0).getuList().get(0).getShowname());
 		
+		model.addAttribute("activitys", a);
 		return "userinfo/collect";
 	}
 	
@@ -47,11 +52,10 @@ public class UserController {
 	public String attended(Model model,HttpServletRequest req,HttpServletResponse res){
 		HttpSession session = req.getSession();
 		int userId = (int) session.getAttribute("userId");
-		User a = userService.selectAttendActivityByUserId(userId);
-		System.out.println(a);
-		System.out.println(a.getaList());
+		List<Activitys> a = activityService.selectAttendActivityByUserId(userId);
+		System.out.println(a.get(0).getuList().get(0).getShowname());
 		
-		model.addAttribute("activitys", a.getaList());
+		model.addAttribute("activitys", a);
 		return "userinfo/attend";
 	}
 	
@@ -73,7 +77,12 @@ public class UserController {
 	}
 	@RequestMapping("/public")
 	public String publiced(Model model,HttpServletRequest req,HttpServletResponse res){
+		HttpSession session = req.getSession();
+		int userId = (int) session.getAttribute("userId");
+		List<Activitys> a = activityService.selectPublicActivityByUserId(userId);
+		System.out.println(a.get(0).getuList().get(0).getShowname());
 		
+		model.addAttribute("activitys", a);
 		return "userinfo/public";
 	}
 	@RequestMapping("/past")

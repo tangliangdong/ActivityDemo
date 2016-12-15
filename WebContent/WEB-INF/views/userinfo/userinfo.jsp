@@ -12,6 +12,7 @@
 <body>
 	<div class="container">
 		<h2>用户信息</h2>
+		<a class="btn btn-primary" href="<c:url value='/activity' />">返回首页</a>
 	</div>
 	
 </body>
