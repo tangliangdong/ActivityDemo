@@ -28,5 +28,13 @@ public class AttendService {
 		return attendMapper.selectByUserIdAndActivityId(userId,activityId);
 	}
 	
+	public int delete(Attendactivity a){
+		return attendMapper.delete(a);
+	}
+	
+	public int deleteByActivityId(int activityId){
+		return attendMapper.deleteByActivityId(activityId);
+	}
+	
 	
 }

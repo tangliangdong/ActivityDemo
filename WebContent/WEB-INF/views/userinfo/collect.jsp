@@ -13,20 +13,46 @@
 	<div class="container">
 		<h2>已收藏活动</h2>
 		<a class="btn btn-primary" href="<c:url value='/activity' />">返回首页</a>
+		<a class="btn btn-info" href="<c:url value='/userinfo' />">返回个人主页</a>
 		<div class="content container" style="margin: 20px 0 0 40px;">
 			<c:forEach items="${activitys}" var="activity">
 				<div class="activity-box">
 					<h3>${activity.name}</h3>
 					<p>发起人：${activity.getuList().get(0).getShowname()}</p>
-					<p><span>发起时间：${activity.startTime}</span><span>结束时间：${activity.endTime}</span></p>
+					<p>发起时间：${activity.getDateStartTime()}</p>
+				<p>结束时间：${activity.getDateEndTime()}</p>
 					<p>活动地点:${activity.place}</p>
 					<p>可参与人数：${activity.peopleCount}</p>
-					<button id="collect-btn" class="btn btn-danger">取消收藏</button>
+					<button id="collect-btn" data="${activity.id}" class="btn btn-danger">取消收藏</button>
 				</div>
 			</c:forEach>
 		</div>
 	</div>
 	
+
+	<script type="text/javascript">
+		(function(){
+			console.log($('#collect-btn').attr('data'));
+			$('#collect-btn').click(function(event) {
+				$this = $(this);
+				$.ajax({
+					url: '<c:url value="/userinfo/collected" />?activityId=' + $(this).attr('data'),
+					type: 'post',
+					dataType: 'json',
+					success:function(data){
+						console.log(data);
+						if(data.id === '1'){
+							$this.parent('.activity-box').remove();
+							alert("成功取消收藏该活动");
+						}else{
+							alert("无法取消收藏活动");
+						}
+					}
+				})
+			});
+		})();
+
+	</script>
 
 </body>
 </html>

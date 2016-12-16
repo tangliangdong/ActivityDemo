@@ -3,6 +3,7 @@ package edu.hziee.controllers;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,8 +43,14 @@ public class ActivityController {
 	
 //	进入活动页
 	@RequestMapping()
-	public String list(Model model){
+	public String list(Model model) throws ParseException{
 		List<Activitys> list = activityService.selectActivitys();
+//		for (Activitys activity : list) {
+//			activity.start = activityService.longToDate(activity.getStartTime());
+//			activity.end = activityService.longToDate(activity.getEndTime());
+//			System.out.println(activity.start);
+//		}
+//		System.out.println(list.get(0).start);
 		model.addAttribute("activitys", list);
 		return "activity/activitys";
 	}

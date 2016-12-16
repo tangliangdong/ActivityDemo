@@ -1,18 +1,41 @@
 package edu.hziee.models;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class Activitys {
     private Integer activityId;
     private String name;
     private Integer userId;
-    private Integer startTime;
-    private Integer endTime;
+    private long startTime;
+    private long endTime;
     private String place;
     private Integer peopleCount;
+    private int pass;
+    
+//    public String start;
+//    public String end;
     
     private List<User> uList;
-    public Integer getId() {
+    
+    public Integer getActivityId() {
+		return activityId;
+	}
+
+	public void setActivityId(Integer activityId) {
+		this.activityId = activityId;
+	}
+
+	public int getPass() {
+		return pass;
+	}
+
+	public void setPass(int pass) {
+		this.pass = pass;
+	}
+
+	public Integer getId() {
         return activityId;
     }
 
@@ -36,21 +59,45 @@ public class Activitys {
         this.userId = userId;
     }
 
-    public Integer getStartTime() {
+    public long getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Integer startTime) {
+    public void setStartTime(long startTime) {
         this.startTime = startTime;
     }
 
-    public Integer getEndTime() {
+    public long getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Integer endTime) {
+    public void setEndTime(long endTime) {
         this.endTime = endTime;
     }
+    
+    public String getDateStartTime(){
+    	try {
+			return longToDate(this.startTime);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+    }
+    
+    public String getDateEndTime(){
+    	try {
+			return longToDate(this.endTime);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+    }
+    
+    public String longToDate(Long timechuo) throws ParseException{
+		SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
+		String d = sdf.format(timechuo);
+		return d;
+	}
 
     public String getPlace() {
         return place;

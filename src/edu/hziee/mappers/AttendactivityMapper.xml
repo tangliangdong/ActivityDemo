@@ -145,6 +145,17 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+  <delete id="delete" parameterType="edu.hziee.models.Attendactivity">
+  	delete from attendactivity 
+  	where user_id = #{userId} 
+  	and activity_id=#{activityId}
+  </delete>
+  
+   <delete id="deleteByActivityId" parameterType="edu.hziee.models.Attendactivity">
+  	delete from attendactivity 
+  	where activity_id=#{activityId}
+  </delete>
+  
   <insert id="insert" parameterType="edu.hziee.models.Attendactivity">
     <!--
       WARNING - @mbg.generated

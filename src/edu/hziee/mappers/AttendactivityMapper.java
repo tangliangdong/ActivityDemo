@@ -25,7 +25,9 @@ public interface AttendactivityMapper {
 
     int updateByExample(@Param("record") Attendactivity record, @Param("example") AttendactivityExample example);
 
+    int delete(Attendactivity a);
     
+    int deleteByActivityId(int activityId);
     
     
 }

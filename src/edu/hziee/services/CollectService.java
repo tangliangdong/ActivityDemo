@@ -24,5 +24,12 @@ public class CollectService {
 	public int cancelCollect(CollectactivityKey c){
 		return collectMapper.deleteByPrimaryKey(c);
 	}
+	public int delete(CollectactivityKey c){
+		return collectMapper.delete(c);
+	}
+	
+	public int deleteByActivityId(int activityId){
+		return collectMapper.deleteByActivityId(activityId);
+	}
 	
 }

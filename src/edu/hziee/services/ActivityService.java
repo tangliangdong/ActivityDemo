@@ -48,6 +48,10 @@ public class ActivityService {
     	return activitysMapper.selectPublicActivityByUserId(userId);
     }
     
+    public List<Activitys> selectWaitCheckActivityByUserId(@Param("userId") int userId){
+    	return activitysMapper.selectWaitCheckActivityByUserId(userId);
+    }
+    
     public List<Activitys> DateFormat(List<Activitys> list){
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分");
     	for (Activitys activity : list) {
@@ -78,10 +82,21 @@ public class ActivityService {
 		for(char w : s){
 			str1 += w;
 		}
-		SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM" );
+		SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
 		java.util.Date date1 = sdf.parse(str1);
 		int timechuo = Integer.parseInt(String.valueOf(date1.getTime()).toString().substring(0,10));
-		System.out.println(timechuo);
 		return timechuo;
+	}
+	
+	public String longToDate(Long timechuo) throws ParseException{
+		SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
+		String d = sdf.format(timechuo);
+		return d;
+	}
+	
+	
+	
+	public int delete(int id){
+		return activitysMapper.deleteByPrimaryKey(id);
 	}
 }

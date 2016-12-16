@@ -22,6 +22,9 @@ public class UserService {
 	public User selectByUsername(String username){
 		return userMapper.selectByUsername(username);
 	}
+	public User selectById(int userId){
+		return userMapper.selectByPrimaryKey(userId);
+	}
 	public User selectAttendActivityByUserId(int userId){
 		return userMapper.selectAttendActivtitysByUserId(userId);
 	}
@@ -64,6 +67,20 @@ public class UserService {
 		}else {
 			return -1;
 		}
-		
+	}
+	public User checkAdmin(User user){
+		User user1 = userMapper.selectAdmin(user.getUsername());
+		if(user1 != null){
+			String password = MD5String.getMD5Str(user.getPassword());
+			if(user1.getPassword().equals(password)){
+				user.setShowname(user1.getShowname());
+				user.setId(user1.getId());
+				return user;
+			}else{
+				return null;
+			}
+		}else{
+			return null;
+		}
 	}
 }

@@ -24,7 +24,8 @@
 			<div class="activity-box">
 				<h3>${activity.name}</h3>
 				<p>发起人：${activity.userId}</p>
-				<p><span>发起时间：${activity.startTime}</span><span>结束时间：${activity.endTime}</span></p>
+				<p>发起时间：${activity.getDateStartTime()}</p>
+				<p>结束时间：${activity.getDateEndTime()}</p>
 				<p>活动地点:${activity.place}</p>
 				<p>可参与人数：${activity.peopleCount}</p>
 				<a href="<c:url value='/activity/${activity.id}'/>" class="btn btn-info">查看详情</a>

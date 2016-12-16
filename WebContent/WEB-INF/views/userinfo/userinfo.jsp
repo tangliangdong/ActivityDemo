@@ -13,6 +13,9 @@
 	<div class="container">
 		<h2>用户信息</h2>
 		<a class="btn btn-primary" href="<c:url value='/activity' />">返回首页</a>
+		<a class="btn btn-info" href="<c:url value='/userinfo' />">返回个人主页</a>
+		<p>昵称：${user.showname}</p>
+		<p>账号：${user.username }</p>
 	</div>
 	
 </body>

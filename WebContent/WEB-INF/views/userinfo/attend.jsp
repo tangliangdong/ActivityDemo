@@ -13,16 +13,17 @@
 	<div class="container">
 		<h2>已参与活动</h2>
 		<a class="btn btn-primary" href="<c:url value='/activity' />">返回首页</a>
+		<a class="btn btn-info" href="<c:url value='/userinfo' />">返回个人主页</a>
 		<div class="content container" style="margin: 20px 0 0 40px;">
 			<c:forEach items="${activitys}" var="activity">
 				<div class="activity-box">
-				<h3>${activity.name}</h3>
+					<h3>${activity.name}</h3>
 				 	<p>发起人：${activity.getuList().get(0).getShowname()}</p>
-					<p>发起时间：${activity.startTime}</p>
-					<p>结束时间：${activity.endTime}</p>
+					<p>发起时间：${activity.getDateStartTime()}</p>
+					<p>结束时间：${activity.getDateEndTime()}</p>
 					<p>活动地点:${activity.place}</p>
 					<p>可参与人数：${activity.peopleCount}</p>
-					<button id="attend-btn" data="${activity.id }" class="btn btn-danger">退出活动</button> 
+					<button id="attend-btn" data="${activity.id}" class="btn btn-danger">退出活动</button> 
 				</div>
 			</c:forEach>
 		</div>
@@ -31,15 +32,21 @@
 		(function(){
 			console.log($('#attend-btn').attr('data'));
 			$('#attend-btn').click(function(event) {
+				$this = $(this);
 				$.ajax({
-					url: '<c:url value="/userinfo/cancelAttend" />',
+					url: '<c:url value="/userinfo/cancelAttend" />?activityId=' + $(this).attr('data'),
 					type: 'post',
-					dataType: 'json'
+					dataType: 'json',
+					success:function(data){
+						console.log(data);
+						if(data.id === '1'){
+							$this.parent('.activity-box').remove();
+							alert("成功退出该活动");
+						}else{
+							alert("无法退出活动");
+						}
+					}
 				})
-				
-				// $.post("<c:url value='/userinfo/cancelAttend' />", {"activityId": 2}, function(data, textStatus, xhr) {
-				// 	console.log(data);
-				// });
 			});
 		})();
 

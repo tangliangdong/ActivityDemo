@@ -4,16 +4,25 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>过期活动</title>
+<title>用户管理</title>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/bootstrap/css/bootstrap.css'/>">
 <script type="text/javascript" src="<c:url value='/resources/js/jquery-2.2.4.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/bootstrap/js/bootstrap.js'/>"></script>
 </head>
 <body>
 	<div class="container">
-		<h2>过期活动</h2>
-		<a class="btn btn-primary" href="<c:url value='/activity' />">返回首页</a>
-		<a class="btn btn-info" href="<c:url value='/userinfo' />">返回个人主页</a>
+		<h3>用户管理界面</h3>
+		<a class="btn btn-info" href="<c:url value='/login/admin' />">返回管理界面</a>
+		<table class="table table-hover">
+			<c:forEach var="item" items="${items}">
+				<tr>
+					<td>用户昵称：${item.showname }</td>
+					<td>账号：${item.username }</td>
+					<td><a class="btn btn-info" href="<c:url value="/admin/detail"/>">发布的活动</a></td>
+				</tr>
+			</c:forEach>
+		</table>
+		
 	</div>
 </body>
 </html>

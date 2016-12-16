@@ -11,7 +11,6 @@
 <title>活动详情</title>
 </head>
 <body>
-
 	<div class="container">
 		<!-- <div class="alert alert-error">
 		  <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -53,6 +52,7 @@
 					$.post('collect?id=${activity.id}', function(data, textStatus, xhr) {
 						console.log(data);
 						if(data.remind){
+							alert("成功收藏活动");
 							$this.text(data.btnWord);
 						}else{
 							alert("收藏活动失败");
@@ -63,6 +63,7 @@
 					$.post('cancelCollect?id=${activity.id}', function(data, textStatus, xhr) {
 						console.log(data);
 						if(data.remind){
+							alert("成功取消收藏活动");
 							$this.text(data.btnWord);
 						}else{
 							alert("收藏活动失败");
@@ -76,6 +77,7 @@
 				var $this = $(this);
 				$.post('attend?id=${activity.id}', function(data, textStatus, xhr) {
 					console.log(data);
+					alert("成功加入活动");
 					$this.text(data.remind).prop('disabled', true);
 				});
 			});

@@ -4,25 +4,20 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>个人页面</title>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/bootstrap/css/bootstrap.css'/>">
 <script type="text/javascript" src="<c:url value='/resources/js/jquery-2.2.4.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/bootstrap/js/bootstrap.js'/>"></script>
+<title>管理界面</title>
 </head>
 <body>
 	<div class="container">
-		<h3>你好，${showname}</h3>
-		<a class="btn btn-primary" href="<c:url value='/activity' />">返回首页</a>
+		<h3>用户管理界面</h3>
 		<ul class="nav nav-tabs nav-stacked">
-		  <li><a href="<c:url value='/userinfo/collected'/>">已收藏的活动</a></li>
-		  <li><a href="<c:url value='/userinfo/attended'/>">已参与的活动</a></li>
-		  <li><a href="<c:url value='/userinfo/checking'/>">正在审核的活动</a></li>
-		  <li><a href="<c:url value='/userinfo/public'/>">已发布的活动</a></li>
-		  <li><a href="<c:url value='/userinfo/past'/>">过期的活动</a></li>
-		  <li><a href="<c:url value='/userinfo/${userId}'/>">用户信息</a></li>
-		  <%-- <li><a href="<c:url value=''/>"</a></li> --%>
+		  <li><a href="<c:url value='/admin/user'/>">用户管理</a></li>
+		  <li><a href="<c:url value='/admin/activity'/>">审核活动</a></li>
+		 <!--  <li><a href="<c:url value='/userinfo/checking'/>">正在审核的活动</a></li> -->
 		</ul>
+
 	</div>
-	
 </body>
 </html>

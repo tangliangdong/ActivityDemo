@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -61,6 +62,27 @@ public class LoginController {
 			}
 		}
 		return "login/register";
+	}
+	
+	@RequestMapping("/admin")
+	public String admin(Model model,HttpServletRequest req,HttpServletResponse res){
+		if (req.getMethod().equals("POST")) {
+			HttpSession session = req.getSession();
+			String username = req.getParameter("username");
+			String password = req.getParameter("password");
+			User u = new User();
+			u.setUsername(username);
+			u.setPassword(password);
+			User user = userService.checkAdmin(u);
+			if(user != null){
+				session.setAttribute("aUsername", user.getUsername());
+				session.setAttribute("aShowname", user.getShowname());
+				session.setAttribute("aUserId", user.getId());
+			}
+			session.setAttribute("ausername", "");
+			return "admin/manage";
+		}
+		return "login/admin";
 	}
 	
 	@RequestMapping("/cancel")

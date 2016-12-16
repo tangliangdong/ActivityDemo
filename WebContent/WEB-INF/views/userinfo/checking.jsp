@@ -11,7 +11,21 @@
 </head>
 <body>
 	<div class="container">
-		
+		<h2>等待审核的活动</h2>
+		<h3>耐心等待管理员审核</h3>
+		<a class="btn btn-primary" href="<c:url value='/activity' />">返回首页</a>
+		<a class="btn btn-info" href="<c:url value='/userinfo' />">返回个人主页</a>
+		<c:forEach items="${activitys}" var="activity">
+			<div class="activity-box">
+				<h3>${activity.name}</h3>
+				<p>发起人：${showname}</p>
+				<p>发起时间：${activity.getDateStartTime()}</p>
+				<p>结束时间：${activity.getDateEndTime()}</p>
+				<p>活动地点:${activity.place}</p>
+				<p>可参与人数：${activity.peopleCount}</p>
+				<button id="public-btn" data="${activity.id}" class="btn btn-danger">取消活动</button>
+			</div>
+		</c:forEach>
 	</div>
 </body>
 </html>

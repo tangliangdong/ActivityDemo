@@ -31,13 +31,17 @@ public class LoginFilter implements Filter {
 		
 		String loginUrl = request.getContextPath() + "/login";
 		String registerUrl = request.getContextPath() + "/login/register";
+		String adminUrl = request.getContextPath() + "/login/admin";
+		
 		boolean loginRequest = request.getRequestURI().equals(loginUrl);
 		boolean resourceRequest = request.getRequestURI().
 				startsWith(request.getContextPath() + "/resources" + "/");
 		boolean loggedIn = (session != null ) 
-				&& (session.getAttribute("username") != null);
+				&& (session.getAttribute("username") != null) 
+				&& (session.getAttribute("aUsername") != null);
 		boolean registerRequest = request.getRequestURI().equals(registerUrl);
-		if(loggedIn || loginRequest || resourceRequest || registerRequest){
+		boolean adminRequest = request.getRequestURI().equals(adminUrl);
+		if(loggedIn || loginRequest || resourceRequest || registerRequest || adminRequest){
 			response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 			response.setHeader("Pragma","no-cache");
 			response.setDateHeader("Expires", 0);

@@ -22,5 +22,9 @@ public interface CollectactivityMapper {
 
     int updateByExample(@Param("record") CollectactivityKey record, @Param("example") CollectactivityExample example);
 
+    int delete(CollectactivityKey c);
+    
+    int deleteByActivityId(int activityId);
+    
     CollectactivityKey selectByUserIdAndActivityId(@Param("userId") int userId,@Param("activityId") int activityId);
 }
