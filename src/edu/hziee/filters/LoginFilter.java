@@ -31,14 +31,14 @@ public class LoginFilter implements Filter {
 		
 		String loginUrl = request.getContextPath() + "/login";
 		String registerUrl = request.getContextPath() + "/login/register";
-		String adminUrl = request.getContextPath() + "/login/admin";
+		String adminUrl = request.getContextPath() + "/admin";
 		
 		boolean loginRequest = request.getRequestURI().equals(loginUrl);
 		boolean resourceRequest = request.getRequestURI().
 				startsWith(request.getContextPath() + "/resources" + "/");
 		boolean loggedIn = (session != null ) 
 				&& (session.getAttribute("username") != null) 
-				&& (session.getAttribute("aUsername") != null);
+				|| (session.getAttribute("aUsername") != null);
 		boolean registerRequest = request.getRequestURI().equals(registerUrl);
 		boolean adminRequest = request.getRequestURI().equals(adminUrl);
 		if(loggedIn || loginRequest || resourceRequest || registerRequest || adminRequest){

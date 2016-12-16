@@ -34,6 +34,12 @@ public interface ActivitysMapper {
     
     List<Activitys> selectWaitCheckActivityByUserId(@Param("userId") int userId);
     
+    List<Activitys> selectWaitCheckActivity();
+    
+    List<Activitys> selectNoCheckActivity();
+    
+    int updatePass(@Param("activityId") int activityId,@Param("pass") int pass);
+    
     int updateByExampleSelective(@Param("record") Activitys record, @Param("example") ActivitysExample example);
 
     int updateByExample(@Param("record") Activitys record, @Param("example") ActivitysExample example);

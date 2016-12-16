@@ -12,7 +12,7 @@
 <body>
 	<div class="container">
 		<h3>管理员登录界面</h3>
-		<form class="form-horizontal" action="<c:url value="/login/admin" />" method="post">
+		<form class="form-horizontal" action="<c:url value="/admin" />" method="post">
 		  <div class="control-group">
 		    <label class="control-label" for="inputEmail">Username</label>
 		    <div class="controls">
