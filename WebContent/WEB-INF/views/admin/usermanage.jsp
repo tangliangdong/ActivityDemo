@@ -6,11 +6,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>用户管理</title>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/bootstrap/css/bootstrap.css'/>">
+<style type="text/css">
+	.checkNo:after{
+		content: "审核不通过";
+		display: block;
+		font-size: 12px;
+		font-weight: bold;
+		color: #FF372D;
+		height: 20px;
+		width: 70px;
+	}
+
+</style>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery-2.2.4.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/bootstrap/js/bootstrap.js'/>"></script>
 </head>
 <body>
-	<div class="container">
+	<div class="container hhh">
 		<c:choose>
 			<c:when test="${type == 1 }">
 				<h3>用户管理界面</h3>
@@ -34,7 +46,17 @@
 						<tr>
 							<td>用户昵称：${item.showname }</td>
 							<td>账号：${item.username }</td>
-							<td><a class="btn btn-info" href="<c:url value="/admin/detail"/>">发布的活动</a></td>
+							<td>
+								<a class="btn btn-info public-activity" href="<c:url value="/admin/detail"/>">发布的活动</a>
+								<button class="btn btn-danger freeze-btn" data="${item.id}">冻结该用户</button>
+							</td>
+							<td class="status">
+								<c:choose>
+									<c:when test="${item.power == 1 }"><p class="text-success">正常状态</p></c:when>
+									<c:when test="${item.power == -1 }"><p class="text-danger">冻结状态</p></c:when>
+								</c:choose>
+								
+							</td>
 						</tr>
 					</c:forEach>
 				</c:when>
@@ -69,9 +91,6 @@
 					</c:forEach>
 				</c:when>
 				<c:when test="${type == 3 }">
-				
-				</c:when>
-				<c:when test="${type == 4 }">
 					<c:forEach items="${items}" var="activity">
 						<tr>
 							<td>${activity.name}</td>
@@ -81,100 +100,153 @@
 							<td>活动地点:${activity.place}</td>
 							<td>可参与人数：${activity.peopleCount}</td>
 							<td>
-								<button data="${activity.id}" class="btn btn-danger checkNoPass-btn">审核不通过</button>
+								<button data="${activity.id}" class="btn btn-danger noCheckPass-btn">通过审核</button>
+							</td>
+						</tr>
+					</c:forEach>
+				</c:when>
+				<c:when test="${type == 4 }">
+					<c:forEach items="${items}" var="activity">
+						<tr>
+							<td><span>${activity.name}</span></td>
+							<%-- <p>发起人：${showname}</p> --%>
+							<td>发起时间：${activity.getDateStartTime()}</td>
+							<td>结束时间：${activity.getDateEndTime()}</td>
+							<td>活动地点:${activity.place}</td>
+							<td>可参与人数：${activity.peopleCount}</td>
+							<td>
+								<button data="${activity.id}" class="btn btn-danger passedCheckNo-btn">审核不通过</button>
 							</td>
 						</tr>
 					</c:forEach>
 				</c:when>
 			</c:choose>
 		</table>
+		<!-- <table class="table table-hover">
+			<tr>
+				<td></td>
+				<td>发起时间：</td>
+				<td>结束时间：</td>
+				<td>活动地点:</td>
+				<td>可参与人数:</td>
+				<td>
+					<button data="${activity.id}" class="btn btn-danger forbid-btn">禁止该活动</button>
+				</td>
+			</tr>
+		</table> -->
 	</div>
 	<script type="text/javascript">
 		(function(){
+			$('.freeze-btn').each(function(index, el) {
+				var $this = $(this);
+				$this.click(function(event) {
+					$.ajax({
+						url: '<c:url value="/admin/user" />',
+						type: 'POST',
+						dataType: 'json',
+						data: {userId: $this.attr('data')},
+						success: function(data){
+							console.log(data);
+							if(data.isUpdate){
+								$this.parent().next('.status').text('已被冻结');
+								$this.prop('disabled', true);
+								/*$this.parent().parent().parent().after(
+									'<table class="table table-hover">' +
+									'<tr>' +
+									    '<td></td>' +
+										'<td>发起时间：</td>'+
+										'<td>结束时间：</td>'+
+										'<td>活动地点:</td>'+
+										'<td>可参与人数:</td>'+
+										'<td>'+
+											'<button data="${activity.id}" class="btn btn-danger forbid-btn">禁止该活动</button>'+ 
+										'</td>'+
+									'</tr>' +
+								'</table>');*/
+							}
+							
+						}
+					});
+				});
+			});
 			$('.checkPass-btn').each(function(index, el) {
 				var $this = $(this);
 				$this.click(function(event) {
 					console.log("hhhh");
 					$.ajax({
-						url: '<c:url value="/admin/nochecked" />',
+						url: '<c:url value="/admin/activity" />',
 						type: 'POST',
 						dataType: 'json',
 						data: {doType: 'pass',activityId: $this.attr('data')},
 						success: function(data){
-							console.log(data);
-							$this.parent('.warn').text('已审核通过');
-							console.log($this.parent('.warn'));
-							// $this.prop('disabled', true);
-							// $('#checkNoPass-btn').prop('disabled', false);
+							$this.parent().next('.warn').text('已审核通过');
+							$this.next().prop('disabled', false);
+							$this.prop('disabled', true);
 						}
-					})
+					});
 				});
 			});
-			/*$('.checkPass-btn').on('click', '.checkPass-btn', function(event) {
-				event.preventDefault();
-				console.log(123);
+			$('.checkNoPass-btn').each(function(index, el) {
 				var $this = $(this);
-				console.log("hhhh");
-				$.ajax({
-					url: '<c:url value="/admin/nochecked" />',
-					type: 'POST',
-					dataType: 'json',
-					data: {doType: 'pass',activityId: $this.attr('data')},
-					success: function(data){
-						console.log(data);
-						$this.parent('td').children('.warn').text('已审核通过');
-						// $this.prop('disabled', true);
-						// $('#checkNoPass-btn').prop('disabled', false);
-					}
-				})
+				$this.click(function(event) {
+					console.log("hhhh");
+					$.ajax({
+						url: '<c:url value="/admin/activity" />',
+						type: 'POST',
+						dataType: 'json',
+						data: {doType: 'nopass',activityId: $this.attr('data')},
+						success: function(data){
+							console.log(data);
+							$this.parent().next('.warn').text('审核不通过');
+							$this.prev().prop('disabled', false);
+							$this.prop('disabled', true);
+						}
+					});
+				});
 			});
-			$('.checkNoPass-btn').on('click', '.checkNoPass-btn', function(event) {
-				event.preventDefault();
+
+			$('.noCheckPass-btn').each(function(index, el) {
 				var $this = $(this);
-				$.ajax({
-					url: '<c:url value="/admin/nochecked" />',
-					type: 'POST',
-					dataType: 'json',
-					data: {doType: 'nopass',activityId: $this.attr('data')},
-					success: function(data){
-						console.log(data);
-						$this.parent('td').children('.warn').text('审核不通过');
-						// $this.prop('disabled', true);
-						// $('#checkPass-btn').prop('disabled', false);
-					}
-				})
-			});*/
-			/*$('#checkPass-btn').click(function(event) {
-				var $this = $(this);
-				console.log("hhhh");
-				$.ajax({
-					url: '<c:url value="/admin/nochecked" />',
-					type: 'POST',
-					dataType: 'json',
-					data: {doType: 'pass',activityId: $this.attr('data')},
-					success: function(data){
-						console.log(data);
-						$('#warn').text('已审核通过');
-						$this.prop('disabled', true);
-						$('#checkNoPass-btn').prop('disabled', false);
-					}
-				})
+				$this.click(function(event) {
+					$.ajax({
+						url: '<c:url value="/admin/nochecked" />',
+						type: 'POST',
+						dataType: 'json',
+						data: {activityId: $this.attr('data')},
+						success: function(data){
+							console.log(data);
+							if(data.isUpdate){
+								$this.prop('disabled', true);
+							}
+							alert(data.word);
+						}
+					});
+				});
 			});
-			$('#checkNoPass-btn').click(function(event) {
+
+			$('.passedCheckNo-btn').each(function(index, el) {
 				var $this = $(this);
-				$.ajax({
-					url: '<c:url value="/admin/nochecked" />',
-					type: 'POST',
-					dataType: 'json',
-					data: {doType: 'nopass',activityId: $this.attr('data')},
-					success: function(data){
-						console.log(data);
-						$('#warn').text('审核不通过');
-						$this.prop('disabled', true);
-						$('#checkPass-btn').prop('disabled', false);
-					}
-				})
-			});*/
+				$this.click(function(event) {
+					$.ajax({
+						url: '<c:url value="/admin/checked" />',
+						type: 'POST',
+						dataType: 'json',
+						data: {activityId: $this.attr('data')},
+						success: function(data){
+							console.log(data);
+							if(data.isUpdate){
+								$this.prop('disabled', true);
+								$this.parent().parent().find('td').first().children('span').addClass('checkNo');
+							}
+							alert(data.word);
+						}
+					});
+				});
+			});
+
+
+			
+			
 		})();
 
 	</script>

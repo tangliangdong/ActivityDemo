@@ -30,7 +30,7 @@ public class ActivityService {
 	private AttendactivityMapper attendMapper;
 
     public List<Activitys> selectActivitys(){
-    	return activitysMapper.select();
+    	return activitysMapper.selectByPass(1);
     }
     
 //    public List<Activitys> selectActivitysByUserId(int userId){

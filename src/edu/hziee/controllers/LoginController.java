@@ -23,7 +23,7 @@ public class LoginController {
 	
 //	跳转到登录页面
 	@RequestMapping()
-	public String get(HttpServletRequest req,HttpServletResponse res){
+	public String get(Model model,HttpServletRequest req,HttpServletResponse res){
 		
 		if(req.getMethod().equals("POST")){
 			HttpSession session = req.getSession();
@@ -32,12 +32,18 @@ public class LoginController {
 			user.setPassword(req.getParameter("password"));
 			User user1 = userService.checkLogin(user);
 			if(user1 != null){
-				session.setAttribute("username", user1.getUsername());
-				session.setAttribute("showname", user1.getShowname());
-				session.setAttribute("userId", user1.getId());
-				return "redirect:/activity";
+				if(user1.getPower() == 1 ){
+					session.setAttribute("username", user1.getUsername());
+					session.setAttribute("showname", user1.getShowname());
+					session.setAttribute("userId", user1.getId());
+					return "redirect:/activity";
+				}else{
+					model.addAttribute("loginRemind", "此账户已被冻结");
+					return "/login/login";
+				}
 			}else{
-				return "redirect:/login";
+				model.addAttribute("loginRemind", "账号或密码不存在");
+				return "/login/login";
 			}
 		}
 		return "/login/login";

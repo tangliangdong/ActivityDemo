@@ -24,6 +24,7 @@ public class User {
 		this.showname = showname;
 		this.power = power;
 	}
+	
 	public List<Activitys> getaList() {
 		return aList;
 	}

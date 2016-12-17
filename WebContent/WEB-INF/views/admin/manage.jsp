@@ -15,7 +15,7 @@
 		<ul class="nav nav-tabs nav-stacked">
 		  <li><a href="<c:url value='/admin/user'/>">用户管理</a></li>
 		  <li><a href="<c:url value='/admin/activity'/>">审核活动</a></li>
-		  <li><a href="<c:url value='/admin/nochecked'/>">审核未通过的活动</a></li>
+		  <li><a href="<c:url value='/admin/nochecked'/>">未通过审核的活动</a></li>
 		  <li><a href="<c:url value='/admin/checked'/>">已通过审核的活动</a></li>
 		</ul>
 

@@ -22,7 +22,7 @@ public interface ActivitysMapper {
 
     Activitys selectByPrimaryKey(Integer id);
     
-    List<Activitys> select();
+    List<Activitys> selectByPass(@Param("pass") int pass);
     
     List<Activitys> selectByUserId(@Param("userId") int userId);
     
@@ -34,9 +34,9 @@ public interface ActivitysMapper {
     
     List<Activitys> selectWaitCheckActivityByUserId(@Param("userId") int userId);
     
-    List<Activitys> selectWaitCheckActivity();
+    /*List<Activitys> selectWaitCheckActivity();
     
-    List<Activitys> selectNoCheckActivity();
+    List<Activitys> selectNoCheckActivity();*/
     
     int updatePass(@Param("activityId") int activityId,@Param("pass") int pass);
     

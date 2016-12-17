@@ -25,12 +25,19 @@ public class AdminService {
 		return userMapper.selectUser();
 	}
 	
+	public int updatePowerByUserId(int userId,int power){
+		return userMapper.updatePowerByUserId(userId,power);
+	}
+	
 	public List<Activitys> select(){
-		return activitysMapper.select();
+		return activitysMapper.selectByPass(1);
 	}
 	
 	public List<Activitys> selectActivity(){
-		return activitysMapper.selectWaitCheckActivity();
+		return activitysMapper.selectByPass(0);
+	}
+	public List<Activitys> selectNoPassActivity(){
+		return activitysMapper.selectByPass(2);
 	}
 	
 	public int updatePass(int activityId,int pass){

@@ -21,6 +21,8 @@ public interface UserMapper {
     List<User> selectUser();
     
     User selectAdmin(String username);
+    
+    int updatePowerByUserId(@Param("userId")int userId,@Param("power") int power);
 
     int updateByPrimaryKeySelective(User record);
 

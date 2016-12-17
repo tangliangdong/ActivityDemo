@@ -9,28 +9,32 @@
 <title>登录页面</title>
 </head>
 <body>
-	<form class="form-horizontal" action="login" method="post">
-	  <div class="control-group">
-	    <label class="control-label" for="inputEmail">Username</label>
-	    <div class="controls">
-	      <input type="text" id="inputEmail" name="username" placeholder="username">
-	    </div>
-	  </div>
-	  <div class="control-group">
-	    <label class="control-label" for="inputPassword">Password</label>
-	    <div class="controls">
-	      <input type="password" id="inputPassword" name="password" placeholder="Password">
-	    </div>
-	  </div>
-	  <div class="control-group">
-	    <div class="controls">
-	      <label class="checkbox">
-	        <input type="checkbox"> Remember me
-	      </label>
-	      <button type="submit" class="btn">Login</button>
-	      <a class="btn btn-primary" href="login/register">注册</a>
-	    </div>
-	  </div>
-	</form>
+	<div class="container">
+		<h2>用户登录</h2>
+		<c:if test="${loginRemind != null}">
+			<span style="color:red;">${loginRemind }</span>
+		</c:if>
+		<form class="form-horizontal" action="login" method="post">
+		  <div class="control-group">
+		    <label class="control-label" for="inputEmail">Username</label>
+		    <div class="controls">
+		      <input type="text" id="inputEmail" name="username" placeholder="username">
+		    </div>
+		  </div>
+		  <div class="control-group">
+		    <label class="control-label" for="inputPassword">Password</label>
+		    <div class="controls">
+		      <input type="password" id="inputPassword" name="password" placeholder="Password">
+		    </div>
+		  </div>
+		  <div class="control-group">
+		    <div class="controls">
+		      <button type="submit" class="btn">Login</button>
+		      <a class="btn btn-primary" href="login/register">注册</a>
+		    </div>
+		  </div>
+		</form>
+	</div>
+	
 </body>
 </html>

@@ -61,9 +61,21 @@ public class AdminController {
 	 * @param model type 
 	 * 		  1： 用户管理界面; 2：活动管理界面
 	 * @return
+	 * @throws IOException 
 	 */
 	@RequestMapping("/user")
-	public String userManage(Model model,HttpServletRequest req, HttpServletResponse res){
+	public String userManage(Model model,HttpServletRequest req, HttpServletResponse res) throws IOException{
+		if(req.getMethod().equals("POST")){
+			int userId = Integer.parseInt(req.getParameter("userId"));
+			PrintWriter out = res.getWriter();
+			int n = adminService.updatePowerByUserId(userId, -1);
+			if(n > 0){
+				out.write("{\"isUpdate\":true}");
+			}else{
+				out.write("{\"isUpdate\":false}");
+			}
+			return null;
+		}
 		List<User> users = adminService.selectUser();
 		System.out.println(users.get(0));
 		model.addAttribute("items", users);
@@ -72,15 +84,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/activity")
-	public String activityManage(Model model,HttpServletRequest req, HttpServletResponse res){
-		List<Activitys> activitys = adminService.selectActivity();
-		model.addAttribute("items", activitys);
-		model.addAttribute("type", 2);
-		return "admin/usermanage";
-	}
-	
-	@RequestMapping("/nochecked")
-	public String noCheckManage(Model model,HttpServletRequest req, HttpServletResponse res) throws IOException{
+	public String activityManage(Model model,HttpServletRequest req, HttpServletResponse res) throws IOException{
 		if(req.getMethod().equals("POST")){
 			String doType = req.getParameter("doType");
 			int activityId = Integer.parseInt(req.getParameter("activityId"));
@@ -96,6 +100,25 @@ public class AdminController {
 		}
 		List<Activitys> activitys = adminService.selectActivity();
 		model.addAttribute("items", activitys);
+		model.addAttribute("type", 2);
+		return "admin/usermanage";
+	}
+	
+	@RequestMapping("/nochecked")
+	public String noCheckManage(Model model,HttpServletRequest req, HttpServletResponse res) throws IOException{
+		if(req.getMethod().equals("POST")){
+			int activityId = Integer.parseInt(req.getParameter("activityId"));
+			PrintWriter out = res.getWriter();
+			int n = adminService.updatePass(activityId, 1);
+			if(n > 0){
+				out.write("{\"isUpdate\":true,\"word\":\"该活动已通过审核\"}");
+			}else{
+				out.write("{\"isUpdate\":false,\"word\":\"此操作失败\"}");
+			}
+			return null;
+		}
+		List<Activitys> activitys = adminService.selectNoPassActivity();
+		model.addAttribute("items", activitys);
 		model.addAttribute("type", 3);
 		return "admin/usermanage";
 	}
@@ -103,7 +126,14 @@ public class AdminController {
 	@RequestMapping("/checked")
 	public String checkedManage(Model model,HttpServletRequest req, HttpServletResponse res) throws IOException{
 		if(req.getMethod().equals("POST")){
-			
+			int activityId = Integer.parseInt(req.getParameter("activityId"));
+			PrintWriter out = res.getWriter();
+			int n = adminService.updatePass(activityId, 2);
+			if(n > 0){
+				out.write("{\"isUpdate\":true,\"word\":\"该活动审核不通过\"}");
+			}else{
+				out.write("{\"isUpdate\":false,\"word\":\"此操作失败\"}");
+			}
 			return null;
 		}
 		List<Activitys> activitys = adminService.select();

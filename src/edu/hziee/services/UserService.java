@@ -45,6 +45,7 @@ public class UserService {
 			if(user1.getPassword().equals(password)){
 				user.setShowname(user1.getShowname());
 				user.setId(user1.getId());
+				user.setPower(user1.getPower());
 				return user;
 			}else{
 				return null;
