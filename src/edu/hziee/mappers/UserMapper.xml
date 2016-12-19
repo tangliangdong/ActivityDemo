@@ -247,6 +247,7 @@
   	update user set power = #{power} where id = #{userId}
   </update>
   <update id="updateByExampleSelective" parameterType="map">
+    
     update user
     <set>
       <if test="record.id != null">

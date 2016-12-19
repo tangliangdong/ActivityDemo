@@ -66,13 +66,24 @@ public class AdminController {
 	@RequestMapping("/user")
 	public String userManage(Model model,HttpServletRequest req, HttpServletResponse res) throws IOException{
 		if(req.getMethod().equals("POST")){
+			int doType = Integer.parseInt(req.getParameter("doType"));
 			int userId = Integer.parseInt(req.getParameter("userId"));
-			PrintWriter out = res.getWriter();
-			int n = adminService.updatePowerByUserId(userId, -1);
-			if(n > 0){
-				out.write("{\"isUpdate\":true}");
+			if(doType == 1){
+				PrintWriter out = res.getWriter();
+				int n = adminService.updatePowerByUserId(userId, -1);
+				if(n > 0){
+					out.write("{\"isUpdate\":true}");
+				}else{
+					out.write("{\"isUpdate\":false}");
+				}
 			}else{
-				out.write("{\"isUpdate\":false}");
+				PrintWriter out = res.getWriter();
+				int n = adminService.updatePowerByUserId(userId, 1);
+				if(n > 0){
+					out.write("{\"isUpdate\":true}");
+				}else{
+					out.write("{\"isUpdate\":false}");
+				}
 			}
 			return null;
 		}
@@ -140,5 +151,15 @@ public class AdminController {
 		model.addAttribute("items", activitys);
 		model.addAttribute("type", 4);
 		return "admin/usermanage";
+	}
+	
+	//管理员注销
+	@RequestMapping("/cancel")
+	public String cancel(Model model,HttpServletRequest req, HttpServletResponse res){
+		HttpSession session = req.getSession();
+		session.removeAttribute("aUsername");
+		session.removeAttribute("aShowname");
+		session.removeAttribute("aUserId");
+		return "redirect:/admin";
 	}
 }

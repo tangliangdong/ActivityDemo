@@ -7,15 +7,50 @@
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/bootstrap/css/bootstrap.css '/>">
 <script src="<c:url value='/resources/js/jquery-2.2.4.min.js' />"></script>
 <title>注册用户</title>
+<style type="text/css">
+	.hasUser:after{
+		content: "该账号已存在";
+		display: block;
+		font-size: 12px;
+		font-weight: bold;
+		color: #FF372D;
+		height: 20px;
+		width: 70px;
+	}
+
+</style>
 </head>
 <body>
 	<h2>注册</h2>
 	<form class="form-inline" action="register" method="post">
-		昵称：<input type="text" class="input-small" name="showname" placeholder="showname">
-	  账号：<input type="text" class="input-small" name="username" placeholder="username">
-	  密码：<input type="password" class="input-small" name="password" placeholder="Password">
-	  重复密码：<input type="password" class="input-small" name="password2" placeholder="Password">
+		昵称：<input type="text" class="input-small" name="showname" placeholder="showname"/>
+	  账号：<input type="text" id="account" class="input-small" name="username" placeholder="username"/>
+	  密码：<input type="password" class="input-small" name="password" placeholder="Password"/>
+	  重复密码：<input type="password" class="input-small" name="password2" placeholder="Password"/>
 	  <button type="submit" class="btn">Sign in</button>
 	</form>
+
+	<script type="text/javascript">
+		(function(){
+			$('#account').change(function(event) {
+				var $this = $(this);
+				$.ajax({
+					url: '<c:url value="/login/checkUser" />',
+					type: 'POST',
+					dataType: 'json',
+					data: {username: $this.val()},
+					success:function(data){
+						console.log(data);
+						if(data.hasUser){
+							$this.addClass('hasUser');
+						}
+					}
+				});
+			});
+		})();
+		
+			
+
+	</script>
 </body>
 </html>

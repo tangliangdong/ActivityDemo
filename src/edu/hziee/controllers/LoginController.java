@@ -1,5 +1,8 @@
 package edu.hziee.controllers;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import edu.hziee.models.User;
 import edu.hziee.services.UserService;
 import edu.hziee.util.MD5String;
+import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
 @Controller
 @RequestMapping("/login")
@@ -24,9 +28,11 @@ public class LoginController {
 //	跳转到登录页面
 	@RequestMapping()
 	public String get(Model model,HttpServletRequest req,HttpServletResponse res){
-		
+		HttpSession session = req.getSession();
+		session.removeAttribute("aUsername");
+		session.removeAttribute("aShowname");
+		session.removeAttribute("aUserId");
 		if(req.getMethod().equals("POST")){
-			HttpSession session = req.getSession();
 			User user = new User();
 			user.setUsername(req.getParameter("username"));
 			user.setPassword(req.getParameter("password"));
@@ -70,6 +76,24 @@ public class LoginController {
 		return "login/register";
 	}
 	
+	@RequestMapping(value="/checkUser",method = RequestMethod.POST)
+	public String checkUser(Model model,HttpServletRequest req,HttpServletResponse res) throws IOException{
+		res.setContentType("application/json");
+		String username = req.getParameter("username");
+		PrintWriter out = res.getWriter();
+		System.out.println(username);
+		User user = userService.selectByUsername(username);
+		if(user != null){
+			System.out.println(1);
+			out.write("{\"hasUser\":true}");
+		}else{
+			System.out.println(2);
+			out.write("{\"hasUser\":false}");
+		}
+		return null;
+	}
+	
+//	普通用户注销
 	@RequestMapping("/cancel")
 	public String cancel(HttpServletRequest req,HttpServletResponse res){
 		HttpSession session = req.getSession();

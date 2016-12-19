@@ -12,6 +12,8 @@
 <body>
 	<div class="container">
 		<h3>用户管理界面</h3>
+		<a href="<c:url value='/admin/cancel'/>" class="btn btn-danger">注销</a>
+		<a href="<c:url value='/login'/>" class="btn btn-info">普通用户登录入口</a>
 		<ul class="nav nav-tabs nav-stacked">
 		  <li><a href="<c:url value='/admin/user'/>">用户管理</a></li>
 		  <li><a href="<c:url value='/admin/activity'/>">审核活动</a></li>
