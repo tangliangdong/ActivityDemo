@@ -174,10 +174,21 @@
   	WHERE user.id = #{userId} and pass = 0
   </select>
   
-  <select id="selectByPass" resultMap="BaseResultMap">
-  	select 
-    <include refid="Base_Column_List" />
-    from activitys where pass = #{pass}
+  <select id="selectByPass" resultMap="AttendResultMap">
+  	select user.showname,activitys.id as activity_id,activitys.name,activitys.start_time,activitys.end_time,activitys.place,activitys.people_count
+    from activitys left join user on activitys.user_id = user.id 
+    where pass = #{pass}
+  </select>
+  
+  <select id="selectByPassAndPower" resultMap="AttendResultMap">
+  	select user.showname,user.id,activitys.id as activity_id,activitys.name,activitys.start_time,activitys.end_time,activitys.place,activitys.people_count
+    from activitys left join user on activitys.user_id = user.id 
+    where pass = #{pass} and power = #{power}
+  </select>
+  
+  <select id="selectByPassAndPowerAndUserId" resultMap="AttendResultMap">
+  	select user.showname,user.id,activitys.id as activity_id,activitys.name,activitys.start_time,activitys.end_time,activitys.place,activitys.people_count
+    from activitys left join user on activitys.user_id = user.id where pass = #{pass} and power = #{power} and user.id = #{userId}
   </select>
   
   <!-- <select id="selectWaitCheckActivity" resultMap="BaseResultMap">

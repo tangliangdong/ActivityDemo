@@ -34,10 +34,16 @@ public class AdminService {
 	}
 	
 	public List<Activitys> selectActivity(){
-		return activitysMapper.selectByPass(0);
+		return activitysMapper.selectByPassAndPower(0, 1);
 	}
 	public List<Activitys> selectNoPassActivity(){
 		return activitysMapper.selectByPass(2);
+	}
+	public List<Activitys> selectActivityByUserId(int userId){
+		return activitysMapper.selectByUserId(userId);
+	}
+	public List<Activitys> selectDeleteActivity(){
+		return activitysMapper.selectByPass(-1);
 	}
 	
 	public int updatePass(int activityId,int pass){

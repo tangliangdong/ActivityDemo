@@ -44,7 +44,7 @@ public class ActivityController {
 //	进入活动页
 	@RequestMapping()
 	public String list(Model model) throws ParseException{
-		List<Activitys> list = activityService.selectActivitys();
+		List<Activitys> list = activityService.selectByPassAndPower(1, 1);
 //		for (Activitys activity : list) {
 //			activity.start = activityService.longToDate(activity.getStartTime());
 //			activity.end = activityService.longToDate(activity.getEndTime());

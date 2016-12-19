@@ -136,11 +136,35 @@ public class UserController {
 		model.addAttribute("activitys", a);
 		return "userinfo/public";
 	}
+	
 	@RequestMapping("/past")
 	public String past(Model model,HttpServletRequest req,HttpServletResponse res){
 		
 		return "userinfo/past";
 	}
+	
+//	用户审核未通过的活动页
+	@RequestMapping("/checkedno")
+	public String checkNo(Model model,HttpServletRequest req,HttpServletResponse res) throws IOException{
+		HttpSession session = req.getSession();
+		int userId = (int)session.getAttribute("userId");
+		if(req.getMethod().equals("POST")){
+			int activityId = Integer.parseInt(req.getParameter("activityId"));
+			System.out.println(activityId);
+			int n = activityService.updateActivityById(activityId, -1);
+			PrintWriter out = res.getWriter();
+			if(n > 0){
+				out.write("{\"isUpdate\":true}");
+			}else{
+				out.write("{\"isUpdate\":false}");
+			}
+			return null;
+		}
+		List<Activitys> list = activityService.selectByPassAndPowerAndUserId(2, 1, userId);
+		model.addAttribute("activitys", list);
+		return "userinfo/checkno";
+	}
+	
 	@RequestMapping("/{id}")
 	public String userindo(@PathVariable int id,Model model,HttpServletRequest req,HttpServletResponse res){
 		User user = userService.selectById(id);

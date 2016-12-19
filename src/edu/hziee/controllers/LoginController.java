@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,10 +29,16 @@ public class LoginController {
 //	跳转到登录页面
 	@RequestMapping()
 	public String get(Model model,HttpServletRequest req,HttpServletResponse res){
+		
 		HttpSession session = req.getSession();
+//		session.removeAttribute("username");
+//		session.removeAttribute("showname");
+//		session.removeAttribute("userId");
 		session.removeAttribute("aUsername");
 		session.removeAttribute("aShowname");
 		session.removeAttribute("aUserId");
+		
+		
 		if(req.getMethod().equals("POST")){
 			User user = new User();
 			user.setUsername(req.getParameter("username"));
@@ -77,7 +84,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/checkUser",method = RequestMethod.POST)
-	public String checkUser(Model model,HttpServletRequest req,HttpServletResponse res) throws IOException{
+	public void checkUser(Model model,HttpServletRequest req,HttpServletResponse res) throws IOException{
 		res.setContentType("application/json");
 		String username = req.getParameter("username");
 		PrintWriter out = res.getWriter();
@@ -90,7 +97,6 @@ public class LoginController {
 			System.out.println(2);
 			out.write("{\"hasUser\":false}");
 		}
-		return null;
 	}
 	
 //	普通用户注销

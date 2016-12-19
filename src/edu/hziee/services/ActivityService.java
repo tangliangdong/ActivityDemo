@@ -33,9 +33,13 @@ public class ActivityService {
     	return activitysMapper.selectByPass(1);
     }
     
-//    public List<Activitys> selectActivitysByUserId(int userId){
-//    	return activitysMapper.selectByUserId(userId);
-//    }
+    public List<Activitys> selectByPassAndPower(int pass,int power){
+    	return activitysMapper.selectByPassAndPower(pass,power);
+    }
+    
+    public List<Activitys> selectByPassAndPowerAndUserId(int pass,int power,int userId){
+    	return activitysMapper.selectByPassAndPowerAndUserId(pass, power, userId);
+    }
     public List<Activitys> selectAttendActivityByUserId(int userId){
 		return activitysMapper.selectAttendActivityByUserId(userId);
 	}
@@ -92,6 +96,10 @@ public class ActivityService {
 		SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
 		String d = sdf.format(timechuo);
 		return d;
+	}
+	
+	public int updateActivityById(int activityId,int pass){
+		return activitysMapper.updatePass(activityId, pass);
 	}
 	
 	

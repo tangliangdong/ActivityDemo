@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
@@ -63,6 +64,7 @@ public class AdminController {
 	 * @return
 	 * @throws IOException 
 	 */
+//	用户管理界面
 	@RequestMapping("/user")
 	public String userManage(Model model,HttpServletRequest req, HttpServletResponse res) throws IOException{
 		if(req.getMethod().equals("POST")){
@@ -94,6 +96,7 @@ public class AdminController {
 		return "admin/usermanage";
 	}
 	
+//	未审核的活动
 	@RequestMapping("/activity")
 	public String activityManage(Model model,HttpServletRequest req, HttpServletResponse res) throws IOException{
 		if(req.getMethod().equals("POST")){
@@ -115,6 +118,7 @@ public class AdminController {
 		return "admin/usermanage";
 	}
 	
+//	未通过审核的活动
 	@RequestMapping("/nochecked")
 	public String noCheckManage(Model model,HttpServletRequest req, HttpServletResponse res) throws IOException{
 		if(req.getMethod().equals("POST")){
@@ -129,11 +133,13 @@ public class AdminController {
 			return null;
 		}
 		List<Activitys> activitys = adminService.selectNoPassActivity();
+		System.out.println(activitys);
 		model.addAttribute("items", activitys);
 		model.addAttribute("type", 3);
 		return "admin/usermanage";
 	}
 	
+//	显示审核通过的活动
 	@RequestMapping("/checked")
 	public String checkedManage(Model model,HttpServletRequest req, HttpServletResponse res) throws IOException{
 		if(req.getMethod().equals("POST")){
@@ -153,7 +159,15 @@ public class AdminController {
 		return "admin/usermanage";
 	}
 	
-	//管理员注销
+//	显示删除的活动
+	@RequestMapping("/deleted")
+	public String delete(Model model,HttpServletRequest req, HttpServletResponse res){
+		List<Activitys> list = adminService.selectDeleteActivity();
+		model.addAttribute("activitys", list);
+		return "admin/delete";
+	}
+	
+//	管理员注销
 	@RequestMapping("/cancel")
 	public String cancel(Model model,HttpServletRequest req, HttpServletResponse res){
 		HttpSession session = req.getSession();
@@ -161,5 +175,17 @@ public class AdminController {
 		session.removeAttribute("aShowname");
 		session.removeAttribute("aUserId");
 		return "redirect:/admin";
+	}
+	
+//	查看用户发布的活动
+	@RequestMapping("/detail")
+	public String detail(Model model,HttpServletRequest req, HttpServletResponse res){
+		HttpSession session = req.getSession();
+		int userId = Integer.parseInt(req.getParameter("userId"));
+		List<Activitys> list = adminService.selectActivityByUserId(userId);
+		model.addAttribute("items", list);
+		System.out.println(list);
+		model.addAttribute("showname", "");
+		return "admin/detail";
 	}
 }

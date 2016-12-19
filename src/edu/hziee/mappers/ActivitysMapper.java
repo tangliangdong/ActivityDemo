@@ -34,9 +34,10 @@ public interface ActivitysMapper {
     
     List<Activitys> selectWaitCheckActivityByUserId(@Param("userId") int userId);
     
-    /*List<Activitys> selectWaitCheckActivity();
     
-    List<Activitys> selectNoCheckActivity();*/
+    List<Activitys> selectByPassAndPower(@Param("pass") int pass,@Param("power") int power);
+    
+    List<Activitys> selectByPassAndPowerAndUserId(@Param("pass") int pass,@Param("power") int power,@Param("userId") int userId);
     
     int updatePass(@Param("activityId") int activityId,@Param("pass") int pass);
     

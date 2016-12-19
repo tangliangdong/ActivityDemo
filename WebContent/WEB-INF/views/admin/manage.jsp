@@ -19,6 +19,7 @@
 		  <li><a href="<c:url value='/admin/activity'/>">审核活动</a></li>
 		  <li><a href="<c:url value='/admin/nochecked'/>">未通过审核的活动</a></li>
 		  <li><a href="<c:url value='/admin/checked'/>">已通过审核的活动</a></li>
+		  <li><a href="<c:url value='/admin/deleted'/>">已被删除的活动</a></li>
 		</ul>
 
 	</div>

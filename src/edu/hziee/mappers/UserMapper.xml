@@ -157,7 +157,7 @@
   </select>
   
   <select id="selectAdmin" resultMap="BaseResultMap">
-  	select username,password,id 
+  	select username,showname,password,id 
   	from user 
   	where username = #{username} and power = 2
   </select>
