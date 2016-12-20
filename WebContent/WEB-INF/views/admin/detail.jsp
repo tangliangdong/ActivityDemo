@@ -12,6 +12,8 @@
 <body>
 	<div class="container">
 		<h3>${aShowname}的活动</h3>
+		<a class="btn btn-info" href="<c:url value='/admin' />">返回管理界面</a>
+		<a class="btn btn-info" href="<c:url value='/admin/user' />">返回用户管理界面</a>
 		<table class="table table-hover">
 			<tr>
 				<th>活动名称</th>
@@ -20,7 +22,7 @@
 				<th>结束时间</th>
 				<th>活动地点</th>
 				<th>可参与人数</th>
-				<th>审核活动</th>
+				<!-- <th>审核活动</th> -->
 				<th>活动状态</th>
 			</tr>
 			<c:forEach items="${items}" var="activity">
@@ -31,20 +33,20 @@
 					<td>${activity.getDateEndTime()}</td>
 					<td>${activity.place}</td>
 					<td>${activity.peopleCount}</td>
-					<td>
+					<!-- <td>
 						<button data="${activity.id}" class="btn btn-danger checkPass-btn">审核通过</button>
 						<button data="${activity.id}" class="btn btn-danger checkNoPass-btn">审核不通过</button>
-					</td>
+					</td> -->
 					<td class="warn">
 						<c:choose>
 							<c:when test="${activity.pass == 0 }">
-								等待审核
+								<span class="text-primary">等待审核</span>
 							</c:when>
 							<c:when test="${activity.pass == 1 }">
-								已审核通过
+								<span class="text-success">已审核通过</span>
 							</c:when>
 							<c:when test="${activity.pass == 2 }">
-								审核不通过
+								<span class="text-danger">审核不通过</span>
 							</c:when>
 						</c:choose>
 					</td>

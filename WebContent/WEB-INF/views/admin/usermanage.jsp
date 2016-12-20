@@ -62,7 +62,7 @@
 							<td>${item.showname }</td>
 							<td>${item.username }</td>
 							<td>
-								<a class="btn btn-info public-activity" href="<c:url value='/admin/detail'/>?userId=${item.id}">发布的活动</a>
+								<a class="btn btn-info public-activity" href="<c:url value='/admin/detail'/>?userId=${item.id}">申请过的活动</a>
 								<button class="btn btn-danger freeze-btn" ${item.power != 1?"disabled":""} data="${item.id}">冻结该用户</button>
 								<button class="btn btn-danger deblocking-btn" ${item.power == 1?"disabled":""} data="${item.id}">解封该用户</button>
 							</td>

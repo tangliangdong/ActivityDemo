@@ -99,12 +99,12 @@ public class ActivityService {
 	}
 	
 	public int updateActivityById(int activityId,int pass){
-		return activitysMapper.updatePass(activityId, pass);
+		return activitysMapper.updatePassById(activityId, pass);
 	}
 	
 	
 	
 	public int delete(int id){
-		return activitysMapper.deleteByPrimaryKey(id);
+		return activitysMapper.updatePassById(id, 2);
 	}
 }

@@ -47,6 +47,6 @@ public class AdminService {
 	}
 	
 	public int updatePass(int activityId,int pass){
-		return activitysMapper.updatePass(activityId, pass);
+		return activitysMapper.updatePassById(activityId, pass);
 	}
 }

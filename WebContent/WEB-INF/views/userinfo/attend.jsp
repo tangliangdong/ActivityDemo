@@ -14,39 +14,60 @@
 		<h2>已参与活动</h2>
 		<a class="btn btn-primary" href="<c:url value='/activity' />">返回首页</a>
 		<a class="btn btn-info" href="<c:url value='/userinfo' />">返回个人主页</a>
-		<div class="content container" style="margin: 20px 0 0 40px;">
+		<table class="table table-hover">
+			<tr>
+				<th>活动名称</th>
+				<th>发起人</th>
+				<th>发起时间</th>
+				<th>结束时间</th>
+				<th>活动地点</th>
+				<th>可参与人数</th>
+				<th>操作</th>
+				<th>状态</th>
+			</tr>
 			<c:forEach items="${activitys}" var="activity">
-				<div class="activity-box">
-					<h3>${activity.name}</h3>
-				 	<p>发起人：${activity.getuList().get(0).getShowname()}</p>
-					<p>发起时间：${activity.getDateStartTime()}</p>
-					<p>结束时间：${activity.getDateEndTime()}</p>
-					<p>活动地点:${activity.place}</p>
-					<p>可参与人数：${activity.peopleCount}</p>
-					<button id="attend-btn" data="${activity.id}" class="btn btn-danger">退出活动</button> 
-				</div>
+				<tr>
+					<td>${activity.name}</td>
+					<td><span class="text-info">${activity.getuList().get(0).getShowname()}</span></td>
+					<td>${activity.getDateStartTime()}</td>
+					<td>${activity.getDateEndTime()}</td>
+					<td>${activity.place}</td>
+					<td>${activity.peopleCount}</td>
+					<td>
+						<button data="${activity.id}" class="btn btn-danger attend-btn">退出活动</button>
+					</td>
+					<td class="status">
+						<c:choose>
+							<c:when test="${activity.pass == 1}"><span class="text-success">正常状态</span></c:when>
+							<c:when test="${activity.pass == -1}"><span class="text-warning">已被删除</span></c:when>
+							<c:when test="${activity.pass == 2}"><span class="text-danger">审核未通过</span></c:when>
+						</c:choose>
+					</td>
+				</tr>
 			</c:forEach>
-		</div>
+
+		</table>
 	</div>
 	<script type="text/javascript">
 		(function(){
-			console.log($('#attend-btn').attr('data'));
-			$('#attend-btn').click(function(event) {
-				$this = $(this);
-				$.ajax({
-					url: '<c:url value="/userinfo/cancelAttend" />?activityId=' + $(this).attr('data'),
-					type: 'post',
-					dataType: 'json',
-					success:function(data){
-						console.log(data);
-						if(data.id === '1'){
-							$this.parent('.activity-box').remove();
-							alert("成功退出该活动");
-						}else{
-							alert("无法退出活动");
+			$('.attend-btn').each(function(index, el) {
+				var $this = $(this);
+				$this.click(function(event) {
+					$.ajax({
+						url: '<c:url value="/userinfo/cancelAttend" />?activityId=' + $(this).attr('data'),
+						type: 'post',
+						dataType: 'json',
+						success:function(data){
+							console.log(data);
+							if(data.id === '1'){
+								$this.parent().parent().remove();
+								alert("成功退出该活动");
+							}else{
+								alert("无法退出活动");
+							}
 						}
-					}
-				})
+					});
+				});	
 			});
 		})();
 

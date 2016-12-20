@@ -125,9 +125,9 @@ public class Activitys {
 
 	@Override
 	public String toString() {
-		return "Activitys [activityId=" + activityId + ", name=" + name + ", userId=" + userId + ", startTime=" + startTime
-				+ ", endTime=" + endTime + ", place=" + place + ", peopleCount=" + peopleCount + ", uList=" + uList
-				+ "]";
+		return "Activitys [activityId=" + activityId + ", name=" + name + ", userId=" + userId + ", startTime="
+				+ startTime + ", endTime=" + endTime + ", place=" + place + ", peopleCount=" + peopleCount + ", pass="
+				+ pass + ", uList=" + uList + "]";
 	}
-    
+
 }

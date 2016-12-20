@@ -14,43 +14,93 @@
 		<h2>已发布活动</h2>
 		<a class="btn btn-primary" href="<c:url value='/activity' />">返回首页</a>
 		<a class="btn btn-info" href="<c:url value='/userinfo' />">返回个人主页</a>
-		<div class="content container" style="margin: 20px 0 0 40px;">
+		<table class="table table-hover">
+			<tr>
+				<th>活动名称</th>
+				<th>发起人</th>
+				<th>发起时间</th>
+				<th>结束时间</th>
+				<th>活动地点</th>
+				<th>可参与人数</th>
+				<th>操作</th>
+			</tr>
+			
 			<c:forEach items="${activitys}" var="activity">
-				<div class="activity-box">
-					<h3>${activity.name}</h3>
-					<p>发起人：${activity.getuList().get(0).getShowname()}</p>
-					<p>发起时间：${activity.getDateStartTime()}</p>
-					<p>结束时间：${activity.getDateEndTime()}</p>
-					<p>活动地点:${activity.place}</p>
-					<p>可参与人数：${activity.peopleCount}</p>
-					<button id="public-btn" data="${activity.id}" class="btn btn-danger">取消活动</button>
-				</div>
+				<tr>
+					<td>${activity.name}</td>
+					<td>${activity.getuList().get(0).getShowname()}</td>
+					<td>${activity.getDateStartTime()}</td>
+					<td>${activity.getDateEndTime()}</td>
+					<td>${activity.place}</td>
+					<td>${activity.peopleCount}</td>
+					<td>
+						<button data="${activity.id}" class="btn btn-danger public-btn">取消活动</button>
+						<button data="${activity.id}" class="btn btn-danger public-detail">活动详情</button>
+					</td>
+				</tr>
 			</c:forEach>
-		</div>
+		</table>
 
-		<script type="text/javascript">
+		<h4 style="display: none" id="activity-name">活动名称</h4>
+		<h4 style="display: none" id="activity-count">活动人数</h4>
+		<table id="userList" class="table table-hover">
+		</table>
+	</div>
+	<script type="text/javascript">
 		(function(){
-			console.log($('#public-btn').attr('data'));
-			$('#public-btn').click(function(event) {
-				$this = $(this);
-				$.ajax({
-					url: '<c:url value="/userinfo/public" />?activityId=' + $(this).attr('data'),
-					type: 'post',
-					dataType: 'json',
-					success:function(data){
-						console.log(data);
-						if(data.id === '1'){
-							$this.parent('.activity-box').remove();
-							alert("成功取消活动");
-						}else{
-							alert("无法取消活动");
+			$('.public-btn').each(function(index, el) {
+				var $this = $(this);
+				$this.click(function(event) {
+					$.ajax({
+						url: '<c:url value="/userinfo/public" />?type=1&activityId=' + $(this).attr('data'),
+						type: 'post',
+						dataType: 'json',
+						success:function(data){
+							console.log(data);
+							if(data.id === '1'){
+								$this.parent().parent().remove();
+								alert("成功取消活动");
+							}else{
+								alert("无法取消活动");
+							}
 						}
-					}
-				})
+					});
+				});
+			});
+			$('.public-detail').each(function(index, el) {
+				var $this = $(this);
+				$this.click(function(event) {
+					$.post('<c:url value="/userinfo/public" />?type=2',{activityId: $(this).attr('data')}, function(data, textStatus, xhr) {
+						var obj = JSON.parse(data);
+						console.log(obj);
+						var $userList = $('#userList'),
+							$name = $('#activity-name'),
+							$count = $('#activity-count');
+
+						$name.css('display', 'block');
+						$count.css('display', 'block');
+						$name.text('活动名称: '+obj[0].name);
+						$count.text('活动人数: '+obj[0].peopleCount);
+						
+						console.log($userList.find('tr'));
+						$userList.empty();
+						$userList.append(
+							'<tr>'+
+								'<th>用户昵称</th>'+
+							'</tr>'
+						)
+						for (var i = 0; i < obj[0].uList.length; i++) {
+							$userList.append(
+							'<tr>'+
+								'<td>'+ obj[0].uList[i].showname +'</th>'+
+							'</tr>'
+							)
+						}
+					});
+				});
 			});
 		})();
 
 	</script>
-	</div>
 </body>
 </html>

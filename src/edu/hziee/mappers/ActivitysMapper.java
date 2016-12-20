@@ -34,12 +34,13 @@ public interface ActivitysMapper {
     
     List<Activitys> selectWaitCheckActivityByUserId(@Param("userId") int userId);
     
+    List<Activitys> selectAttendUserListByActivityId(@Param("activityId") int activityId);
     
     List<Activitys> selectByPassAndPower(@Param("pass") int pass,@Param("power") int power);
     
     List<Activitys> selectByPassAndPowerAndUserId(@Param("pass") int pass,@Param("power") int power,@Param("userId") int userId);
     
-    int updatePass(@Param("activityId") int activityId,@Param("pass") int pass);
+    int updatePassById(@Param("activityId") int activityId,@Param("pass") int pass);
     
     int updateByExampleSelective(@Param("record") Activitys record, @Param("example") ActivitysExample example);
 

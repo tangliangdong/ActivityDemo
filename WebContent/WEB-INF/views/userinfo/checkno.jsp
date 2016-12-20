@@ -9,7 +9,7 @@
 <script type="text/javascript" src="<c:url value='/resources/js/jquery-2.2.4.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/bootstrap/js/bootstrap.js'/>"></script>
 <style type="text/css">
-	.deleteAct:before{
+	.deleteAct:after{
 		content: "此活动已删除";
 		display: block;
 		font-size: 12px;
@@ -26,38 +26,53 @@
 		<h2>审核未通过的活动</h2>
 		<a class="btn btn-primary" href="<c:url value='/activity' />">返回首页</a>
 		<a class="btn btn-info" href="<c:url value='/userinfo' />">返回个人主页</a>
-		<c:forEach items="${activitys}" var="activity">
-			<div class="activity-box">
-				<h3>${activity.name}</h3>
-				<p>发起人：${showname}</p>
-				<p>发起时间：${activity.getDateStartTime()}</p>
-				<p>结束时间：${activity.getDateEndTime()}</p>
-				<p>活动地点:${activity.place}</p>
-				<p>可参与人数：${activity.peopleCount}</p>
-				<button id="delete-btn" data="${activity.id}" class="btn btn-danger">删除活动</button>
-			</div>
-		</c:forEach>
+		<table class="table table-hover">
+			<tr>
+				<th>活动名称</th>
+				<th>发起人</th>
+				<th>开始时间</th>
+				<th>结束时间</th>
+				<th>活动地点</th>
+				<th>可参与人数</th>
+				<th>操作</th>
+			</tr>
+			<c:forEach items="${activitys}" var="activity">
+				<tr>
+					<td class="name">${activity.name}</td>
+					<td><span class="text-info">${showname}</span></td>
+					<td>${activity.getDateStartTime()}</td>
+					<td>${activity.getDateEndTime()}</td>
+					<td>${activity.place}</td>
+					<td>${activity.peopleCount}</td>
+					<td>
+						<button data="${activity.id}" class="btn btn-danger delete-btn">删除活动</button>
+					</td>
+				</tr>
+			</c:forEach>
+		</table>
+		
 	</div>
 	<script type="text/javascript">
 	(function(){
-		$('#delete-btn').click(function(event) {
+		$('.delete-btn').each(function(index, el) {
 			var $this = $(this);
-			$.ajax({
-				url: '<c:url value="/userinfo/checkedno" />',
-				type: 'POST',
-				dataType: 'json',
-				data: {activityId: $this.attr('data')},
-				success:function(data){
-					if(data.isUpdate){
-						$this.prop('disabled', true);
-						$this.parent().find('h3').addClass('deleteAct');
-						console.log($this.parent());
-					}else{
-
+			$this.click(function(event) {
+				$.ajax({
+					url: '<c:url value="/userinfo/checkedno" />',
+					type: 'POST',
+					dataType: 'json',
+					data: {activityId: $this.attr('data')},
+					success:function(data){
+						if(data.isUpdate){
+							$this.prop('disabled', true);
+							$this.parent().parent().find('.name').addClass('deleteAct');
+						}else{
+							alert("取消活动失败");
+						}
+						console.log(data);
 					}
-					console.log(data);
-				}
-			})
+				});
+			});
 		});
 	})();
 		

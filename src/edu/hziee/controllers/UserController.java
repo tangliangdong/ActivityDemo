@@ -22,6 +22,7 @@ import edu.hziee.services.ActivityService;
 import edu.hziee.services.AttendService;
 import edu.hziee.services.CollectService;
 import edu.hziee.services.UserService;
+import net.sf.json.JSONArray;
 
 @Controller
 @RequestMapping("/userinfo")
@@ -109,25 +110,30 @@ public class UserController {
 		return "userinfo/checking";
 	}
 	@RequestMapping("/public")
-	public String publiced(Model model,HttpServletRequest req,HttpServletResponse res){
+	public String publiced(Model model,HttpServletRequest req,HttpServletResponse res) throws IOException{
 		HttpSession session = req.getSession();
 		int userId = (int) session.getAttribute("userId");
 		if(req.getMethod().equals("POST")){
+			String type = req.getParameter("type");
 			int activityId = Integer.parseInt(
-								req.getParameter("activityId"));
-			int co = collectService.deleteByActivityId(activityId);
-			int at = attendService.deleteByActivityId(activityId);
-			int ac = activityService.delete(activityId);
-			PrintWriter out;
-			try {
-				out = res.getWriter();
-				if(at != 0 && co != 0&& ac != 0){
+					req.getParameter("activityId"));
+			PrintWriter out = res.getWriter();
+			if(type.equals("1")){
+				System.out.println(1);
+//				int co = collectService.deleteByActivityId(activityId);
+//				int at = attendService.deleteByActivityId(activityId);
+				int ac = activityService.delete(activityId);
+				if(ac != 0){
 					out.write("{\"id\":\"1\"}");
 				}else{
 					out.write("{\"id\":\"2\"}");
 				}
-			} catch (IOException e1) {
-				e1.printStackTrace();
+			}else if(type.equals("2")){
+				List<Activitys> list = attendService.selectAttendUserListByActivityId(activityId);
+				JSONArray array = JSONArray.fromObject(list);
+			    String jsonstr = array.toString();
+			    System.out.println(jsonstr);
+			    out.write(jsonstr);
 			}
 			return null;
 		}
