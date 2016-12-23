@@ -95,7 +95,7 @@ public class Activitys {
     
     public String longToDate(Long timechuo) throws ParseException{
 		SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
-		String d = sdf.format(timechuo);
+		String d = sdf.format(timechuo*1000);
 		return d;
 	}
 

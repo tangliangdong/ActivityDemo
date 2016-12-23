@@ -65,7 +65,7 @@ public class ActivityService {
     }
     
 	public int insertActivity(int userId,String name, String place, int count, 
-					int startTime, int endTime) {
+					long startTime, long endTime) {
 		Activitys activity = new Activitys();
 		activity.setName(name);
 		activity.setPlace(place);
@@ -80,7 +80,7 @@ public class ActivityService {
 		return activitysMapper.selectByPrimaryKey(id);
 	}
 	
-	public int DateToLong(String date) throws ParseException{
+	public Long DateToLong(String date) throws ParseException{
 		char[] s = date.toCharArray();
 		String str1 = "";
 		for(char w : s){
@@ -88,13 +88,13 @@ public class ActivityService {
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
 		java.util.Date date1 = sdf.parse(str1);
-		int timechuo = Integer.parseInt(String.valueOf(date1.getTime()).toString().substring(0,10));
+		Long timechuo = Long.parseLong(String.valueOf(date1.getTime()).toString().substring(0,10));
 		return timechuo;
 	}
 	
 	public String longToDate(Long timechuo) throws ParseException{
 		SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
-		String d = sdf.format(timechuo);
+		String d = sdf.format(timechuo*1000);
 		return d;
 	}
 	

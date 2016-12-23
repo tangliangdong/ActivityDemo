@@ -23,7 +23,7 @@
 		<c:forEach items="${activitys}" var="activity">
 			<div class="activity-box">
 				<h3>${activity.name}</h3>
-				<p>发起人：${activity.userId}</p>
+				<p>发起人：${activity.getuList().get(0).getShowname()}</p>
 				<p>发起时间：${activity.getDateStartTime()}</p>
 				<p>结束时间：${activity.getDateEndTime()}</p>
 				<p>活动地点:${activity.place}</p>

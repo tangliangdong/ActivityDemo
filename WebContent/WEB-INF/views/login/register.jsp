@@ -43,7 +43,8 @@
 		  <div class="form-group">
 		    <label for="inputPassword3" class="col-sm-2 control-label">账号</label>
 		    <div class="col-sm-10">
-		      <input type="text" id="account" class="input-small" name="username" placeholder="username"/>
+		      <input type="text" id="account" class="input-small" name="username" placeholder="username" />
+		      <span id="remind-span" style="color:red"></span>
 		    </div>
 		  </div>
 		  <div class="form-group">
@@ -56,7 +57,7 @@
 		    <label for="inputPassword3" class="col-sm-2 control-label">重复密码</label>
 		    <div class="col-sm-10">
 		       <input type="password" class="input-small" id="repepassword" name="password2" placeholder="Password"/>
-		       <span></span>
+		       <span ></span>
 		    </div>
 		  </div>
 		  <div class="form-group">
@@ -79,6 +80,16 @@
 					console.log(data);
 					console.log(textStatus);
 					console.log(xhr);
+					if(data.hasUser){
+						$('#remind-span').text('此账号已被注册');
+						$('#remind-span').fadeIn('100', function() {
+							setTimeout(function(){
+								$('#remind-span').fadeOut('100');
+							},1000);
+						});
+					}else{
+						$('#remind-span').text('');
+					}
 				},'json');
 				/*$.ajax({
 					url: '<c:url value="/login/checkUser" />',

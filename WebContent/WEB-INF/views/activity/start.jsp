@@ -28,16 +28,14 @@
 		  </div>
 		  <div class="form-group">
 		    <label for="inputPassword3" class="col-sm-2 control-label">开始时间</label>
-		    <div class="input-append date" id="datetimepicker" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
-			    <input class="span2" size="16" type="text" value="12-02-2012">
-			    <span class="add-on"><i class="icon-remove"></i></span>
-			    <span class="add-on"><i class="icon-th"></i></span>
-				</div> 
+		    <div class="col-sm-10">
+		      <input type="text" name="startTime">
+		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="inputPassword3" class="col-sm-2 control-label">结束时间</label>
 		    <div class="col-sm-10">
-		      <input type="time" name="endTime">
+		      <input type="text" name="endTime">
 		    </div>
 		  </div>
 		  <div class="form-group">
@@ -61,5 +59,6 @@
 		  </div>
 		</form>
 	</div>
+</div> 
 </body>
 </html>

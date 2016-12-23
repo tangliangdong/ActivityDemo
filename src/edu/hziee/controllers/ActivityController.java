@@ -63,9 +63,9 @@ public class ActivityController {
 			String name = req.getParameter("name");
 			String place = req.getParameter("place");
 			int count = Integer.parseInt(req.getParameter("count"));
-			int startTime = activityService.DateToLong(
+			long startTime = activityService.DateToLong(
 									req.getParameter("startTime"));
-			int endTime = activityService.DateToLong(
+			long endTime = activityService.DateToLong(
 									req.getParameter("endTime"));
 			int userId = (int) session.getAttribute("userId");
 //			System.out.println(Fn.date(activityService.DateToLong(endTime), "yyyy-MM"));
